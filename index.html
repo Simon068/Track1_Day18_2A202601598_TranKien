@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLearn AI Tutor - Day 18 Micro-Prototypes (A/B/C Testing)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TOP CONTROL & OPTION SWITCHER -->
+    <header class="app-header">
+        <div class="logo-area">
+            <h1>VLearn <span>AI Tutor Prototype</span></h1>
+            <span class="badge-lab">Day 18 Lab - Group: Trần Kiên (2A202601598) & Nguyễn Phú Quang (2A202602017)</span>
+        </div>
+        <div class="option-switcher">
+            <button id="btn-opt-a" class="btn-opt active" onclick="switchOption('A')">Option A: User-Led Explainer</button>
+            <button id="btn-opt-b" class="btn-opt" onclick="switchOption('B')">Option B: Co-Creation Socratic</button>
+            <button id="btn-opt-c" class="btn-opt" onclick="switchOption('C')">Option C: AI Proactive Patch</button>
+            <button id="btn-reset" class="btn-reset" onclick="resetPrototype()">🔄 Reset Common Context</button>
+        </div>
+    </header>
+
+    <!-- ANNOTATION BANNER FOR FACILITATOR (Outside Frame) -->
+    <div id="annotation-box" class="annotation-banner">
+        <div class="annotation-title">📌 FACILITATOR ANNOTATION (Ghi chú ngoài màn hình test)</div>
+        <div id="annotation-content" class="annotation-text"></div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="main-container">
+        
+        <!-- LEFT PANEL: COMMON CONTEXT & CODE EDITOR -->
+        <section class="editor-section">
+            <div class="card-header">
+                <h2>💻 Bài Tập Lập Trình Python - VLearn</h2>
+                <span class="task-tag">Task: Sửa lỗi KeyError để Pass Test Cases</span>
+            </div>
+
+            <div class="task-description">
+                <p><strong>Yêu cầu:</strong> Hoàn thành hàm <code>calculate_category_revenue(data)</code> để tính tổng doanh thu theo danh mục sản phẩm từ dữ liệu JSON đầu vào.</p>
+                <div class="data-fixture-preview">
+                    <span>📄 Dữ liệu JSON mẫu (Data Fixture):</span>
+                    <code>{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}]}</code>
+                </div>
+            </div>
+
+            <!-- CODE EDITOR SIMULATION -->
+            <div class="code-editor-wrap">
+                <div class="editor-header">
+                    <span>main.py</span>
+                    <button class="btn-select-line" id="btn-select-line-4" onclick="toggleSelectLine4()">
+                        🔍 Bôi đen dòng 4 (Code lỗi)
+                    </button>
+                </div>
+                <div class="code-content">
+<pre><span class="ln">1</span> def calculate_category_revenue(data):
+<span class="ln">2</span>     revenue = {}
+<span class="ln">3</span>     for item in data['orders']:
+<span class="ln">4</span> <span id="code-line-4" class="code-line-highlight">        cat = item['category']  <span class="comment"># <-- Lỗi xảy ra ở đây!</span></span>
+<span class="ln">5</span>         price = item['price'] * item['quantity']
+<span class="ln">6</span>         revenue[cat] = revenue.get(cat, 0) + price
+<span class="ln">7</span>     return revenue</pre>
+                </div>
+            </div>
+
+            <!-- EDITOR CONTROLS & TEST RUNNER -->
+            <div class="editor-controls">
+                <button class="btn-action btn-run" onclick="runTests()">▶ Run Test Cases</button>
+                <button class="btn-action btn-stuck" id="btn-simulate-stuck" onclick="simulateStuck()">⏱ Giả lập kẹt 45s (For Option C)</button>
+                <button class="btn-action btn-undo hidden" id="btn-undo-patch" onclick="undoPatch()">↩ Undo AI Patch (Recovery)</button>
+            </div>
+
+            <!-- TERMINAL / TEST OUTPUT -->
+            <div class="terminal-box">
+                <div class="terminal-header">Terminal / Test Output</div>
+                <div id="terminal-output" class="terminal-text">
+                    <span class="status-neutral">Sẵn sàng. Nhấn "Run Test Cases" để chạy kiểm thử...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: AI ASSISTANT (DYNAMIC PER OPTION) -->
+        <section class="ai-section">
+            
+            <!-- OPTION A PANEL -->
+            <div id="panel-opt-a" class="ai-panel">
+                <div class="ai-header">
+                    <h3>🤖 AI Code Explainer</h3>
+                    <span class="agency-tag tag-dont-act">DON'T ACT MODE</span>
+                </div>
+                <div class="ai-body">
+                    <p class="ai-intro">Bôi đen dòng code bị lỗi và bấm nút dưới đây để yêu cầu AI giải thích nguyên nhân mà không can thiệp mã nguồn.</p>
+                    
+                    <button id="btn-ask-explainer" class="btn-ai-primary" onclick="triggerOptionAExplainer()" disabled>
+                        ❓ Hỏi AI giải thích dòng 4
+                    </button>
+
+                    <div id="opt-a-result" class="ai-result-card hidden">
+                        <div class="evidence-badge">
+                            🔍 <strong>Bằng chứng:</strong> Dòng 4 <code>item['category']</code> bị lỗi <code>KeyError: 'category'</code>.
+                        </div>
+                        <div class="explanation-text">
+                            <strong>Phân tích AI:</strong> <code>item</code> là một đối tượng chứa dictionary <code>product</code>. Thuộc tính <code>category</code> nằm bên trong <code>item['product']</code> chứ không nằm ở cấp ngoài cùng.
+                        </div>
+                        <div class="hint-box">
+                            💡 <strong>Gợi ý sửa tay:</strong> Đổi <code>item['category']</code> thành <code>item['product']['category']</code>.
+                        </div>
+                        <div class="ai-actions">
+                            <button class="btn-sub" onclick="resetOptionA()">Đóng gợi ý</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION B PANEL -->
+            <div id="panel-opt-b" class="ai-panel hidden">
+                <div class="ai-header">
+                    <h3>🧩 Socratic Mentor</h3>
+                    <span class="agency-tag tag-ask">ASK MODE (Interactive)</span>
+                </div>
+                <div class="ai-body">
+                    <div id="opt-b-idle" class="ai-intro">
+                        <p>Nhấn <strong>"Run Test Cases"</strong> ở bảng bên trái. Nếu test thất bại, Socratic Mentor sẽ tự động xuất hiện với các câu hỏi gợi mở từng bước.</p>
+                    </div>
+
+                    <div id="opt-b-quiz" class="ai-quiz-card hidden">
+                        <div class="evidence-badge">
+                            ⚠️ <strong>Phát hiện lỗi:</strong> <code>KeyError: 'category'</code> khi chạy Test Case 1.
+                        </div>
+                        
+                        <!-- STEP 1 -->
+                        <div id="b-step-1" class="quiz-step">
+                            <p class="quiz-question"><strong>Bước 1/2:</strong> Kiểm tra cấu trúc JSON mẫu ở bên trái. Key <code>'category'</code> nằm ở đâu?</p>
+                            <div class="quiz-options">
+                                <button class="btn-quiz-opt" onclick="answerBStep1(false)">A. Trực tiếp thuộc <code>item</code></button>
+                                <button class="btn-quiz-opt" onclick="answerBStep1(true)">B. Nằm bên trong <code>item['product']</code></button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2 -->
+                        <div id="b-step-2" class="quiz-step hidden">
+                            <div class="step-success">✅ Đúng rồi! Category nằm bên trong object product.</div>
+                            <p class="quiz-question"><strong>Bước 2/2:</strong> Cú pháp Python nào đúng để lấy ra category?</p>
+                            <div class="quiz-options">
+                                <button class="btn-quiz-opt" onclick="answerBStep2(true)">A. <code>item['product']['category']</code></button>
+                                <button class="btn-quiz-opt" onclick="answerBStep2(false)">B. <code>item.get('category')</code></button>
+                            </div>
+                        </div>
+
+                        <!-- FINISH -->
+                        <div id="b-step-finish" class="quiz-step hidden">
+                            <div class="step-success">🎉 Xuất sắc! Bạn đã tự tìm ra nguyên nhân lỗi.</div>
+                            <p>Hãy cập nhật dòng 4 trong mã nguồn và chạy lại Test Cases.</p>
+                            <button class="btn-ai-primary" onclick="applyBCodeFix()">⚡ Tự động điền mã đã sửa vào Editor</button>
+                        </div>
+
+                        <div class="ai-actions">
+                            <button class="btn-sub btn-danger" onclick="skipBQuiz()">⏭ Bỏ qua đối thoại & Xem đáp án ngay (Escape Path)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION C PANEL -->
+            <div id="panel-opt-c" class="ai-panel hidden">
+                <div class="ai-header">
+                    <h3>⚡ Auto-Patch Copilot</h3>
+                    <span class="agency-tag tag-proactive">ASK BEFORE APPLYING</span>
+                </div>
+                <div class="ai-body">
+                    <div id="opt-c-idle" class="ai-intro">
+                        <p>Nhấn nút <strong>"⏱ Giả lập kẹt 45s"</strong> hoặc chạy lỗi liên tục. AI sẽ tự động lập dự thảo sửa code (Draft Patch) để bạn duyệt.</p>
+                    </div>
+
+                    <div id="opt-c-patch" class="ai-patch-card hidden">
+                        <div class="patch-alert">
+                            🚨 <strong>AI Proactive Notice:</strong> Phát hiện bạn bị tắc ở lỗi <code>KeyError</code> > 45 giây. Đã tạo bản thảo vá lỗi:
+                        </div>
+
+                        <!-- DIFF VIEW -->
+                        <div class="diff-viewer">
+                            <div class="diff-header">Code Diff Preview (Độ tin cậy dự kiến: 95%)</div>
+                            <div class="diff-line diff-del">- cat = item['category']</div>
+                            <div class="diff-line diff-add">+ cat = item['product']['category']</div>
+                        </div>
+
+                        <div class="patch-rationale">
+                            <strong>Lý do sửa:</strong> Dữ liệu JSON có cấu trúc lồng nhau <code>product.category</code>.
+                        </div>
+
+                        <div class="ai-patch-actions">
+                            <button class="btn-ai-primary" onclick="applyCPatch()">✅ Apply Patch (Đè Code Sửa)</button>
+                            <button class="btn-sub" onclick="dismissCPatch()">❌ Dismiss (Từ chối)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
