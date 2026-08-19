@@ -2,7 +2,7 @@
 const defaultCode = `def calculate_category_revenue(data):
     revenue = {}
     for item in data['orders']:
-        cat = item['category']  # <-- Bạn có thể tự do gõ sửa / thêm / xóa code ở đây!
+        cat = item['category']  # <-- Bạn có thể tự do gõ sửa / xem Hint / hoặc bấm Sửa Luôn!
         price = item['price'] * item['quantity']
         revenue[cat] = revenue.get(cat, 0) + price
     return revenue`;
@@ -44,19 +44,19 @@ const testCasesData = {
 // ANNOTATIONS DATA FOR FACILITATOR
 const annotations = {
     'A': {
-        expect: "Kỳ vọng người học tự do gõ sửa code trong ô soạn thảo, sau đó bấm 'Phân tích đoạn code hiện tại' để nghe AI giải thích mà không bị sửa hộ.",
-        watch: "Quan sát xem người học gõ sửa code như thế nào, có tự phát hiện vị trí KeyError hay không.",
-        noExplain: "Khuyến cáo người quan sát: KHÔNG hướng dẫn cú pháp Python cho người học."
+        expect: "Kỳ vọng người học xem Gợi ý (Hint) và tự tay gõ sửa code. Nếu vẫn chưa hiểu, bấm 'Sửa Luôn Code' để AI hỗ trợ 100%.",
+        watch: "Quan sát xem người học tự sửa sau khi đọc Hint hay bấm nút 'Sửa Luôn Code' ngay lập tức.",
+        noExplain: "Khuyến cáo người quan sát: KHÔNG hướng dẫn người học cách chọn nút Sửa Luôn."
     },
     'B': {
-        expect: "Kỳ vọng người học tự do sửa code hoặc bấm Run Test để chẩn đoán Socratic khi code bị lỗi.",
-        watch: "Quan sát xem người học có đọc kỹ các câu hỏi chẩn đoán Socratic hay bấm nút bỏ qua.",
+        expect: "Kỳ vọng người học tương tác qua các câu hỏi Socratic. Nếu bế tắc, nút 'Sửa Luôn Code' giúp đi thẳng tới mã nguồn chuẩn.",
+        watch: "Quan sát xem người học chọn suy luận qua trắc nghiệm hay chọn nút Sửa Luôn.",
         noExplain: "Khuyến cáo người quan sát: KHÔNG chọn hộ đáp án A/B cho người học."
     },
     'C': {
-        expect: "Kỳ vọng người học tự gõ sửa hoặc bấm giả lập kẹt 45s để AI xuất hiện bảng xem trước mã nguồn Diff Đỏ/Xanh.",
-        watch: "Quan sát xem người học có đọc bản xem trước mã nguồn hay bấm chấp nhận ngay, và có thử nút Undo khi đổi ý không.",
-        noExplain: "Khuyến cáo người quan sát: KHÔNG gợi ý bấm chấp nhận đè code."
+        expect: "Kỳ vọng người học bấm giả lập kẹt 45s để AI hiện bảng Diff xem trước kèm nút 'Sửa Luôn Code'.",
+        watch: "Quan sát xem người học có đọc bản xem trước mã nguồn hay bấm chấp nhận ngay, và có dùng nút Undo 1-Click không.",
+        noExplain: "Khuyến cáo người quan sát: KHÔNG gợi ý bấm nút đè code."
     }
 };
 
@@ -124,7 +124,7 @@ function resetPrototype() {
     const statusSummary = document.getElementById('test-summary-status');
     statusSummary.className = 'summary-neutral';
     statusSummary.innerText = 'Chưa chạy test';
-    term.innerHTML = `<span class="status-neutral">Sẵn sàng. Hãy chỉnh sửa code và nhấn "Chạy 5 Test Cases" để kiểm thử...</span>`;
+    term.innerHTML = `<span class="status-neutral">Sẵn sàng. Nhấn "Chạy 5 Test Cases" để bắt đầu kiểm thử mã nguồn...</span>`;
 
     // Reset Option A
     document.getElementById('opt-a-result').classList.add('hidden');
@@ -157,6 +157,23 @@ function evaluateUserCode() {
     return isCorrect;
 }
 
+// AUTO-FIX CODE DIRECTLY (IF NOT UNDERSTOOD)
+function autoFixCodeDirectly() {
+    document.getElementById('real-code-editor').value = `def calculate_category_revenue(data):
+    revenue = {}
+    for item in data['orders']:
+        cat = item['product']['category']  # ⚡ Sửa Luôn: Cấu trúc dictionary lồng nhau chuẩn!
+        price = item['price'] * item['quantity']
+        revenue[cat] = revenue.get(cat, 0) + price
+    return revenue`;
+
+    const editorStatus = document.getElementById('editor-status-tag');
+    editorStatus.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Đã được AI Sửa Luôn 100%';
+
+    alert("AI đã Sửa Luôn mã nguồn vào ô soạn thảo! Đang chạy tự động 5 Test Cases...");
+    runTests();
+}
+
 // RUN 5 TEST CASES
 function runTests() {
     const isCorrect = evaluateUserCode();
@@ -172,7 +189,7 @@ function runTests() {
             <span class="status-passed">✓ Test Case 3 PASSED: Output -> {"Electronics": 200, "Education": 100}</span><br>
             <span class="status-passed">✓ Test Case 4 PASSED: Output -> {"Hardware": 10000}</span><br>
             <span class="status-passed">✓ Test Case 5 PASSED: Output -> {} (Empty order array handled)</span><br>
-            <span style="color:#4ade80; font-weight:bold; margin-top:8px; display:inline-block;">🎉 XUẤT SẮC! Mã nguồn bạn tự sửa đã vượt qua tất cả 5/5 Test Cases hoàn hảo.</span>
+            <span style="color:#4ade80; font-weight:bold; margin-top:8px; display:inline-block;">🎉 XUẤT SẮC! Tất cả 5/5 Test Cases đều vượt qua kiểm thử hoàn hảo.</span>
         `;
         return;
     }
@@ -211,12 +228,12 @@ function triggerOptionAExplainer() {
 
     if (isCorrect) {
         badge.className = 'step-success';
-        badge.innerHTML = '<i class="fa-solid fa-check-double"></i> <strong>Đoạn code đã chuẩn xác:</strong> Cú pháp lồng <code>item[\'product\'][\'category\']</code> đã truy cập đúng.';
-        text.innerHTML = '<strong>Phân tích AI:</strong> Bạn đã sửa đúng cấu trúc lồng nhau. Dữ liệu mảng JSON hiện tại có thể đọc trơn tru tất cả 5 Test Cases.';
+        badge.innerHTML = '<i class="fa-solid fa-check-double"></i> <strong>Mã nguồn đã chính xác:</strong> Cú pháp lồng <code>item[\'product\'][\'category\']</code> đã chuẩn.';
+        text.innerHTML = '<strong>Phân tích AI:</strong> Bạn đã sửa đúng cấu trúc lồng nhau. Mã nguồn hiện tại đọc trơn tru tất cả 5 Test Cases.';
     } else {
         badge.className = 'evidence-badge';
-        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <strong>Phát hiện lỗi bế tắc:</strong> Cú pháp <code>item[\'category\']</code> gây ra <code>KeyError</code>.';
-        text.innerHTML = '<strong>Phân tích AI:</strong> Phần tử <code>item</code> chứa dictionary con <code>product</code>. Bạn cần truy cập lồng vào <code>item[\'product\'][\'category\']</code>.';
+        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <strong>Gợi Ý (Hint) & Phân Tích Lỗi:</strong> Cú pháp <code>item[\'category\']</code> gây ra <code>KeyError</code>.';
+        text.innerHTML = '<strong>Phân tích AI:</strong> <code>category</code> nằm bên trong <code>product</code>. Bạn cần đổi thành <code>item[\'product\'][\'category\']</code>.';
     }
 }
 
@@ -230,7 +247,7 @@ function answerBStep1(isCorrect) {
         document.getElementById('b-step-1').classList.add('hidden');
         document.getElementById('b-step-2').classList.remove('hidden');
     } else {
-        alert("Chưa chính xác! Nhìn kỹ vào dữ liệu JSON mẫu ở bên trái: 'category' nằm lồng bên trong 'product'. Hãy chọn lại!");
+        alert("Chưa chính xác! Xem Gợi Ý (Hint): 'category' nằm lồng bên trong 'product'. Hãy chọn lại!");
     }
 }
 
@@ -244,19 +261,12 @@ function answerBStep2(isCorrect) {
 }
 
 function applyBCodeFix() {
-    document.getElementById('real-code-editor').value = `def calculate_category_revenue(data):
-    revenue = {}
-    for item in data['orders']:
-        cat = item['product']['category']  # ✅ Đã cập nhật mã đúng lồng nhau
-        price = item['price'] * item['quantity']
-        revenue[cat] = revenue.get(cat, 0) + price
-    return revenue`;
-    runTests();
+    autoFixCodeDirectly();
 }
 
 function skipBQuiz() {
-    alert("Bạn chọn mở khóa đáp án ngay! Cú pháp mã đúng là: cat = item['product']['category']");
-    applyBCodeFix();
+    alert("Bạn chọn mở khóa đáp án ngay! AI sẽ Sửa Luôn mã nguồn cho bạn.");
+    autoFixCodeDirectly();
 }
 
 // OPTION C LOGIC
@@ -268,17 +278,9 @@ function simulateStuck() {
 }
 
 function applyCPatch() {
-    document.getElementById('real-code-editor').value = `def calculate_category_revenue(data):
-    revenue = {}
-    for item in data['orders']:
-        cat = item['product']['category']  # ⚡ Code được đè bởi AI Copilot
-        price = item['price'] * item['quantity']
-        revenue[cat] = revenue.get(cat, 0) + price
-    return revenue`;
-    
+    autoFixCodeDirectly();
     document.getElementById('opt-c-patch').classList.add('hidden');
     document.getElementById('btn-undo-patch').classList.remove('hidden');
-    runTests();
 }
 
 function dismissCPatch() {

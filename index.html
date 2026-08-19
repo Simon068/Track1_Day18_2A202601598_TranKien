@@ -53,7 +53,7 @@
             </div>
 
             <div class="task-description">
-                <p><strong>Yêu cầu bài tập:</strong> Hoàn thành hàm <code>calculate_category_revenue(data)</code> để tính tổng doanh thu theo từng danh mục sản phẩm từ danh sách đơn hàng JSON. Bạn có thể tự do chỉnh sửa, gõ thêm hoặc xóa mã nguồn trực tiếp trong ô gõ bên dưới.</p>
+                <p><strong>Yêu cầu bài tập:</strong> Hoàn thành hàm <code>calculate_category_revenue(data)</code> để tính tổng doanh thu theo từng danh mục sản phẩm từ danh sách đơn hàng JSON. Bạn có thể tự do gõ sửa code, xem Gợi ý (Hint) hoặc bấm nút để AI Sửa Luôn code giúp bạn.</p>
             </div>
 
             <!-- 5 TEST CASES SELECTOR TABS -->
@@ -102,7 +102,7 @@
                     <span id="test-summary-status" class="summary-neutral">Chưa chạy test</span>
                 </div>
                 <div id="terminal-output" class="terminal-text">
-                    <span class="status-neutral">Sẵn sàng. Hãy chỉnh sửa code và nhấn "Chạy 5 Test Cases" để kiểm thử...</span>
+                    <span class="status-neutral">Sẵn sàng. Nhấn "Chạy 5 Test Cases" để bắt đầu kiểm thử mã nguồn...</span>
                 </div>
             </div>
         </section>
@@ -117,19 +117,31 @@
                     <span class="agency-tag tag-dont-act">USER-LED (DON'T ACT)</span>
                 </div>
                 <div class="ai-body">
-                    <p class="ai-intro">Bấm nút bên dưới để AI phân tích mã nguồn bạn vừa tự gõ và giải thích bối cảnh mà không can thiệp đè code.</p>
+                    <p class="ai-intro">Bấm nút bên dưới để AI phân tích mã nguồn và đưa ra **Gợi ý (Hint)**. Nếu vẫn chưa hiểu, bạn có thể bấm nút **Sửa Luôn**.</p>
                     
                     <button id="btn-ask-explainer" class="btn-ai-primary" onclick="triggerOptionAExplainer()">
-                        <i class="fa-solid fa-magnifying-glass"></i> Phân tích đoạn code hiện tại
+                        <i class="fa-solid fa-lightbulb"></i> Xem Gợi Ý (Hint) & Phân Tích Lỗi
                     </button>
 
                     <div id="opt-a-result" class="ai-result-card hidden">
                         <div id="opt-a-status-badge" class="evidence-badge">
-                            <!-- Dynamic analysis result -->
+                            <!-- Dynamic status -->
                         </div>
                         <div id="opt-a-analysis-text" class="explanation-text">
-                            <!-- Dynamic analysis text -->
+                            <!-- Dynamic text -->
                         </div>
+                        <div class="hint-box">
+                            💡 <strong>Gợi ý (Hint):</strong> Khóa <code>'category'</code> nằm lồng trong dictionary <code>'product'</code>. Bạn hãy thử truy cập <code>item['product']['category']</code>.
+                        </div>
+
+                        <!-- AUTO-FIX BUTTON IF NOT UNDERSTOOD -->
+                        <div class="auto-fix-box">
+                            <p class="auto-fix-prompt">🤔 Vẫn chưa hiểu hoặc chưa tự gõ được?</p>
+                            <button class="btn-ai-autofix" onclick="autoFixCodeDirectly()">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Sửa Luôn Code Giúp Tôi (Auto-Fix Code)
+                            </button>
+                        </div>
+
                         <div class="ai-actions">
                             <button class="btn-sub" onclick="resetOptionA()">Đóng gợi ý</button>
                         </div>
@@ -145,12 +157,12 @@
                 </div>
                 <div class="ai-body">
                     <div id="opt-b-idle" class="ai-intro">
-                        <p>Nhấn nút <strong>"Chạy 5 Test Cases"</strong>. Nếu mã nguồn của bạn chạy bị lỗi, Người thầy AI sẽ xuất hiện với câu hỏi chẩn đoán.</p>
+                        <p>Nhấn nút <strong>"Chạy 5 Test Cases"</strong>. Nếu bài test bị thất bại, Người thầy AI sẽ xuất hiện với câu hỏi chẩn đoán và Gợi ý (Hint).</p>
                     </div>
 
                     <div id="opt-b-quiz" class="ai-quiz-card hidden">
                         <div class="evidence-badge">
-                            ⚠️ <strong>Phát hiện bế tắc:</strong> Bài test bị thất bại do KeyError.
+                            ⚠️ <strong>Phát hiện bế tắc:</strong> Test bị thất bại do KeyError.
                         </div>
                         
                         <!-- STEP 1 -->
@@ -174,9 +186,16 @@
 
                         <!-- FINISH -->
                         <div id="b-step-finish" class="quiz-step hidden">
-                            <div class="step-success">🎉 Xuất sắc! Bạn đã thông suốt bản chất lỗi sai.</div>
-                            <p>Bấm nút bên dưới để tự động cập nhật mã đúng vào ô gõ code và chạy thử 5 Test Cases.</p>
-                            <button class="btn-ai-primary" onclick="applyBCodeFix()">⚡ Cập nhật code & Chạy lại 5 Test Cases</button>
+                            <div class="step-success">🎉 Xuất sắc! Bạn đã hiểu bản chất lỗi sai.</div>
+                            <p>Bấm nút bên dưới để Sửa Luôn mã nguồn vào trình soạn thảo.</p>
+                            <button class="btn-ai-primary" onclick="applyBCodeFix()">⚡ Sửa Luôn Code & Chạy lại 5 Test Cases</button>
+                        </div>
+
+                        <!-- HINT & DIRECT FIX FOR OPTION B -->
+                        <div class="auto-fix-box" style="margin-top:12px;">
+                            <button class="btn-ai-autofix" onclick="autoFixCodeDirectly()">
+                                <i class="fa-solid fa-bolt"></i> Chưa hiểu? Bấm Sửa Luôn Code Giúp Tôi
+                            </button>
                         </div>
 
                         <div class="ai-actions">
@@ -196,12 +215,12 @@
                 </div>
                 <div class="ai-body">
                     <div id="opt-c-idle" class="ai-intro">
-                        <p>Nhấn nút <strong>"⏱ Giả lập kẹt 45s"</strong>. AI sẽ tự động lập dự thảo mã sửa sẵn để bạn duyệt.</p>
+                        <p>Nhấn nút <strong>"⏱ Giả lập kẹt 45s"</strong>. AI sẽ tự động lập dự thảo Sửa Luôn mã nguồn để bạn duyệt.</p>
                     </div>
 
                     <div id="opt-c-patch" class="ai-patch-card hidden">
                         <div class="patch-alert">
-                            🚨 <strong>Phát hiện học viên dừng gõ > 45s:</strong> Trợ lý AI đề xuất bản vá mã nguồn dạng xem trước (Diff Preview):
+                            🚨 <strong>Phát hiện học viên dừng gõ > 45s:</strong> AI đề xuất bản vá mã nguồn dạng xem trước (Diff Preview):
                         </div>
 
                         <!-- DIFF VIEW -->
@@ -212,11 +231,11 @@
                         </div>
 
                         <div class="patch-rationale">
-                            <strong>Lý do sửa:</strong> Dữ liệu JSON có cấu trúc dictionary lồng nhau <code>product.category</code>.
+                            💡 <strong>Gợi ý (Hint):</strong> Dữ liệu JSON có cấu trúc lồng <code>product.category</code>.
                         </div>
 
                         <div class="ai-patch-actions">
-                            <button class="btn-ai-primary" onclick="applyCPatch()">✅ Chấp nhận đè code (Apply Patch)</button>
+                            <button class="btn-ai-primary" onclick="applyCPatch()">⚡ Sửa Luôn Code (Apply Patch)</button>
                             <button class="btn-sub" onclick="dismissCPatch()">❌ Từ chối (Dismiss)</button>
                         </div>
                     </div>
