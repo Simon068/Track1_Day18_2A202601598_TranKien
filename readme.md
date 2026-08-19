@@ -173,28 +173,81 @@ OPTION C (AI-Led Proactive Patch):
 
 ## CHẶNG 5: CHUẨN BỊ TEST (TEST PROMPT & OBSERVATION FOCUS)
 
+### 1. Context & Outcome Task
 - **Relevant Context Question**: *"Trong tuần qua khi học lập trình, bạn có từng gặp phải lỗi code kẹt (Error/Stuck point) khiến bạn tốn 30-40 phút tìm kiếm bên ngoài không?"*
 - **Outcome Task**: *"Trong bài tập Python này, bạn hãy lần lượt trải nghiệm cả 3 phương án A, B, C để tìm ra nguyên nhân lỗi KeyError và sửa code đạt PASSED 100%."*
+
+### 2. 5 Observation Focus Points
+1. **First Action**: Bấm vào đâu đầu tiên khi mở từng phương án (Bôi đen code ở A, bấm Run Test ở B, chờ 45s ở C).
+2. **Hesitation & Misunderstanding**: Khựng lại ở bước nào, có hiểu đúng các câu hỏi chẩn đoán không.
+3. **Evidence Read vs Ignored**: Đọc hay bỏ qua thông báo lỗi, gợi ý lý thuyết và bảng Diff màu đỏ/xanh.
+4. **Correction & Recovery**: Lấy lại quyền kiểm soát bằng cách nào (Nút Undo, Skip Quiz hay Dismiss).
+5. **Option Choice & Trade-off**: Chọn phương án nào và chấp nhận đánh đổi điều gì (Thời gian vs Tiếp thu bản chất).
+
+### 3. Kịch Bản Facilitation & 3 Câu Cứu Hộ
+- **Opening Script**: *"Chúng mình đang thử nghiệm 3 cách thiết kế giao diện hỗ trợ học tập, không kiểm tra bạn. Không có câu trả lời đúng hoặc sai. Bạn hãy tự do thao tác và nói to điều mình đang nghĩ; mình sẽ cố gắng không hướng dẫn."*
+- **Compare Script**: 
+  - *"Trong tình huống này, bạn chọn phương án A, B hay C? Vì sao?"*
+  - *"Bạn muốn tự làm phần nào và giao cho AI làm phần nào?"*
+  - *"Điều gì ở phương án đã chọn khiến bạn chưa thực sự thoải mái?"*
+- **3 Câu cứu hộ khi Tester bị ngập ngừng**:
+  1. *"Bạn cứ thoải mái nói to suy nghĩ hiện tại của mình nhé."*
+  2. *"Bạn sẽ làm gì tiếp theo trên màn hình?"*
+  3. *"Theo bạn, tính năng này nên hoạt động như thế nào?"*
 
 ---
 
 ## CHẶNG 6: TEST VỚI BA NGƯỜI & TỔNG HỢP GROUP NEXT CHANGE
 
-### 1. Chi Tiết 3 Prototype Feedback Notes
+### 1. Chi Tiết 3 Prototype Feedback Notes (Phân tách 4 lớp)
 
-- **Feedback Note 1 (Học viên Minh - Mới học Python)**: Chọn **Option B**. Học viên chia sẻ Option B giúp hiểu bản chất tại sao lại hổng kiến thức dictionary lồng nhau. Option C quá nhanh làm lười tư duy, Option A thì không biết dòng nào lỗi để bôi đen.
-- **Feedback Note 2 (Học viên Linh - Chuyển ngành Data)**: Chọn **Option B kết hợp hiển thị bảng Diff code của Option C ở bước cuối**.
-- **Feedback Note 3 (Học viên Hoàng - Lập trình viên nâng cao)**: Chọn **Option A**. Vì đã có tư duy lập trình căn bản, chỉ cần AI chỉ vị trí lỗi là tự gõ sửa được ngay.
+#### 📝 Feedback Note 1 — Tester Minh (Học viên mới học Python)
+- **Observation Note**: First action đứng im ở A, hào hứng làm quiz ở B; đọc kỹ quiz ở B nhưng bỏ qua Diff ở C; dùng nút Tự động điền ở B; chọn **Option B**.
+- **OBSERVED**: *"Option B giúp mình hiểu tại sao lại sai. Option C quá nhanh khiến mình không học được gì, còn Option A thì mình không biết dòng nào lỗi để bôi đen."*
+- **INTERPRETED**: Học viên mới bị ngợp ở Option A (cần tự chỉ định dòng lỗi) và dễ thụ động ở Option C (bấm duyệt bỏ qua đọc). Option B định hướng vừa sức nhất.
+- **DECIDED — NEXT CHANGE**: Giữ Option B làm luồng chính cho người mới, nhưng bổ sung hình ảnh xem trước code sửa ở bước cuối.
+- **STILL UNPROVEN**: Chưa biết học viên mới có kiên nhẫn làm trắc nghiệm khi bài tập kéo dài nhiều câu hỏi hay không.
 
-### 2. Group Next Change Chốt Cùng Nhóm
-**Kết hợp Option B và Option C thành luồng "Socratic Mentor with Diff Review"**:
+#### 📝 Feedback Note 2 — Tester Linh (Học viên chuyển ngành Data)
+- **Observation Note**: First action bấm Run Test ở B, thử Undo ở C; đọc kỹ cả Quiz ở B và Diff ở C; dùng nút **Undo 1-Click** ở C; chọn **Option B kết hợp Diff của C ở bước cuối**.
+- **OBSERVED**: *"Mình muốn tự suy nghĩ ở Option B, nhưng đến bước cuối mình cần nhìn thấy rõ đoạn code bị thay đổi như ở Option C để chắc chắn hệ thống không làm hỏng logic khác."*
+- **INTERPRETED**: Học viên chuyển ngành cần cả sự gợi mở tư duy (Option B) lẫn sự minh bạch trực quan dưới dạng so sánh mã nguồn Diff (Option C).
+- **DECIDED — NEXT CHANGE**: Kết hợp Option B và Option C thành luồng *"Socratic Diagnostic with Diff Review"*.
+- **STILL UNPROVEN**: Chưa rõ việc thêm bảng Diff ở bước cuối của luồng Socratic có làm kéo dài thời gian làm bài gây sốt ruột cho học viên hay không.
+
+#### 📝 Feedback Note 3 — Tester Hoàng (Lập trình viên nâng cao)
+- **Observation Note**: First action bôi đen dòng 4 ở A, tự gõ sửa code; đọc phần giải thích ở A; dùng nút **Skip Quiz** ở B; chọn **Option A**.
+- **OBSERVED**: *"Mình chỉ cần AI chỉ ra chỗ lồng dictionary sai là mình tự sửa được. Option B hỏi trắc nghiệm làm mình thấy phiền và đứt đoạn suy nghĩ."*
+- **INTERPRETED**: Người đã có nền tảng không thích AI đóng vai "thầy giáo hỏi bài" (Option B) mà muốn giữ 100% quyền kiểm soát (Option A).
+- **DECIDED — NEXT CHANGE**: Giữ nút thoát khẩn cấp *"Bỏ qua đối thoại & Xem đáp án"* (Skip Quiz) ở Option B cho học viên nâng cao.
+- **STILL UNPROVEN**: Chưa biết nhóm học viên nâng cao có sẵn sàng dùng Option A thường xuyên hay sẽ chuyển sang dùng Copilot hoàn toàn.
+
+---
+
+### 2. Group Feedback Synthesis Table
+
+| Tiêu chí | Feedback 1 (Minh) | Feedback 2 (Linh) | Feedback 3 (Hoàng) | Pattern hoặc Khác biệt |
+| :--- | :--- | :--- | :--- | :--- |
+| **First Action** | Đứng im ở A, hào hứng bấm Quiz ở B. | Bấm Run Test ở B, thử Undo ở C. | Bôi đen dòng 4 ở A và tự gõ sửa code. | Người mới cần trigger tự động (B/C); người giỏi thích thủ công (A). |
+| **Breakdown chính** | Không biết dòng lỗi ở A, nhắm mắt bấm duyệt ở C. | Muốn thấy Diff code rõ hơn ở cuối luồng B. | Cảm thấy phiền phức với câu hỏi trắc nghiệm ở B. | Option C thiếu rào cản tư duy; Option B thiếu bản xem trước Diff code. |
+| **Cách lấy lại control** | Dùng nút Tự động điền code ở B. | Dùng nút Undo 1-Click ở C. | Tự tay gõ đè sửa code ở A. | Nút Undo và Edit tay là 2 đường thoát quan trọng nhất. |
+| **Option Chọn** | **Option B** | **Option B (kèm Diff)** | **Option A** | 2/3 chọn Option B làm lõi; 1/3 chọn Option A. |
+| **Trade-off** | Đánh đổi thời gian làm quiz lấy sự hiểu bài. | Đánh đổi thêm 1 bước xem Diff để an tâm. | Đánh đổi việc tự tìm lỗi lấy tốc độ viết code. | Tốc độ vs Tiếp thu sâu bản chất. |
+
+---
+
+### 3. Group Next Change Chốt Cùng Nhóm & Still Unproven
+**Kết hợp Option B và Option C thành luồng "Socratic Diagnostic with Diff Review"**:
 1. Khi `Run Test Failed`, giữ luồng trắc nghiệm chẩn đoán 2 bước của Option B để buộc người học tư duy.
 2. Ở bước hoàn thành, mở ra bảng **Diff Code Preview (của Option C)** hiển thị so sánh Red/Green để người học duyệt lần cuối trước khi Apply, đi kèm nút **Undo 1-Click**.
+
+- **Evidence dẫn tới quyết định này**: Feedback 2 (Linh) yêu cầu trực tiếp việc hiển thị Diff preview ở bước cuối luồng Socratic; Feedback 1 (Minh) chứng minh Option C đơn lẻ khiến học viên lười nghĩ.
+- **Still Unproven sau 3 feedback**: Chưa chứng minh được mô hình B+C có duy trì được sự hứng thú của học viên khi áp dụng cho bài tập kéo dài nhiều tuần hay không.
 
 ---
 
 ## 🤖 AI SUPPORT LOG
 
-- **AI giúp ở đâu**: Gợi ý khung bảng Human-AI Decision Table, sinh dữ liệu mẫu JSON và hỗ trợ viết code HTML/JS tương tác.
-- **AI sai/hời hợt ở đâu**: Ban đầu AI gợi ý 3 options chỉ khác nhau về hình thức hiển thị giao diện (Popup vs Sidebar), làm mất đi bản chất Agency.
-- **Nhóm tự sửa lại gì**: Tự tái cấu trúc 3 options theo đúng mốc Agency (User-led vs Co-creation vs AI-led), bổ sung nút Undo 1-Click và Skip Quiz.
+- **AI đã giúp tôi ở đâu**: Gợi ý khung bảng Human-AI Decision Table, sinh dữ liệu mẫu JSON và hỗ trợ viết code HTML/JS tương tác.
+- **AI sai, hời hợt ở đâu**: Ban đầu AI gợi ý 3 options chỉ khác nhau về hình thức hiển thị giao diện (Popup vs Sidebar), làm mất đi bản chất Agency.
+- **Tôi đã tự sửa hoặc quyết định lại điều gì**: Tự tái cấu trúc 3 options theo đúng mốc Agency (User-led vs Co-creation vs AI-led), bổ sung nút Undo 1-Click và Skip Quiz.
