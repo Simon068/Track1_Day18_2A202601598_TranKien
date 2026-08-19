@@ -36,7 +36,7 @@ Vào lúc **09h35 sáng**, nhóm bắt tay vào xây dựng 3 giải pháp cùng
 Cả 3 phương án đều dùng chung bài tập và dữ liệu mẫu, chỉ khác nhau ở cách phân chia vai trò giữa người học và AI:
 
 1. **Phương án A — Trợ lý giải thích theo yêu cầu (User-Led Explainer)**:
-   * *Cách hoạt động*: Học viên chủ động bôi đen dòng code bị lỗi và bấm nút "Hỏi AI giải thích". Trợ lý AI chỉ phân tích nguyên nhân lỗi và cho ví dụ gợi ý lý thuyết. Học viên phải tự gõ sửa code, AI tuyệt đối không sửa hộ.
+   * *Cách hoạt động*: Học viên chủ động gõ / sửa code và bấm nút "Phân tích đoạn code hiện tại". Trợ lý AI chỉ phân tích nguyên nhân lỗi và cho ví dụ gợi ý lý thuyết. Học viên phải tự gõ sửa code, AI tuyệt đối không sửa hộ.
    * *Ưu - nhược điểm*: Học viên giữ 100% quyền kiểm soát, không lo AI can thiệp sâu, nhưng tốn công tự nhận biết vị trí lỗi.
 
 2. **Phương án B — Người thầy chẩn đoán gợi mở (Co-Creation Socratic Guide)**:
@@ -69,12 +69,24 @@ Vào lúc **09h55 sáng**, nhóm thiết kế chi tiết cơ chế tương tác 
 
 Từ **10h15 sáng đến 10h40 sáng**, nhóm hoàn thành bản demo tương tác web chạy trực tiếp tại file `index.html`.
 
-* **Nội dung dùng chung**: Đều có khung soạn thảo code Python `main.py`, dữ liệu mẫu JSON lồng nhau `orders.product.category`, nút "Run Test Cases" và màn hình kiểm thử Terminal.
-* **Ghi chú ngoài màn hình cho người điều phối (Facilitator Annotations)**: Nhóm đặt thanh ghi chú màu vàng ở trên cùng giao diện để hướng dẫn người quan sát (không hiện cho người test đọc):
-  * *Ở Phương án A*: Quan sát xem người học có biết bôi đen dòng lỗi không. Không hướng dẫn người học cách chọn dòng.
-  * *Ở Phương án B*: Quan sát xem người học có đọc câu hỏi trắc nghiệm không. Không chọn hộ đáp án.
-  * *Ở Phương án C*: Quan sát xem người học có đọc bản xem trước mã nguồn hay bấm duyệt luôn. Không gợi ý bấm nút duyệt.
-* **Nút Reset**: Đã tích hợp nút `🔄 Reset Common Context` giúp đưa giao diện về trạng thái ban đầu chỉ với 1 cú nhấp chuột.
+### 1. Scope Chuẩn & 70% Shared Components
+- **Common Context Screen**: Bài tập Python *"Tính tổng doanh thu theo danh mục sản phẩm từ file dữ liệu JSON"*.
+- **5 Test Cases Thực Tế Tích Hợp**:
+  1. **Test Case 1 (Đơn lồng nhau tiêu chuẩn)**: `{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}]}` $\rightarrow$ Kết quả: `{"Electronics": 1200}`.
+  2. **Test Case 2 (Đa danh mục sản phẩm)**: `{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}, {"product": {"name": "Mouse", "category": "Electronics"}, "price": 25, "quantity": 2}, {"product": {"name": "Shirt", "category": "Apparel"}, "price": 50, "quantity": 3}]}` $\rightarrow$ Kết quả: `{"Electronics": 1250, "Apparel": 150}`.
+  3. **Test Case 3 (Danh mục bổ sung)**: `{"orders": [{"product": {"name": "Headphones", "category": "Electronics"}, "price": 100, "quantity": 2}, {"product": {"name": "Book", "category": "Education"}, "price": 20, "quantity": 5}]}` $\rightarrow$ Kết quả: `{"Electronics": 200, "Education": 100}`.
+  4. **Test Case 4 (Đơn giá lớn)**: `{"orders": [{"product": {"name": "Server", "category": "Hardware"}, "price": 5000, "quantity": 2}]}` $\rightarrow$ Kết quả: `{"Hardware": 10000}`.
+  5. **Test Case 5 (Đơn hàng rỗng - Edge Case)**: `{"orders": []}` $\rightarrow$ Kết quả: `{}`.
+- **Trình Soạn Thảo Cho Phép Gõ / Sửa / Xóa Trực Tiếp**: Người học có thể tự do thêm, sửa, hoặc xóa mã nguồn Python ngay trong ô gõ mà không bị hạn chế gợi ý tĩnh.
+- **Shared Component & Visual Style**: Giao diện Code Editor IDE giao diện tối màu, 5 thẻ chuyển đổi Test Cases, nút `Chạy 5 Test Cases` và Terminal kiểm thử tự động.
+- **Shared Task & Desired Outcome**: Sửa mã nguồn để tất cả 5/5 Test Cases đều đạt PASSED 100%.
+
+---
+
+### 2. Ghi chú ngoài màn hình cho người điều phối (Facilitator Annotations)
+- *Ở Phương án A*: Quan sát xem người học có tự tay gõ sửa code hay không. KHÔNG hướng dẫn cú pháp Python cho người học.
+- *Ở Phương án B*: Quan sát xem người học có đọc câu hỏi trắc nghiệm chẩn đoán hay không. KHÔNG chọn hộ đáp án A/B.
+- *Ở Phương án C*: Quan sát xem người học có đọc bản xem trước mã nguồn hay bấm duyệt ngay. KHÔNG gợi ý bấm nút duyệt.
 
 ---
 
@@ -101,9 +113,9 @@ Từ **10h45 sáng đến 11h00 sáng**, nhóm tổng hợp phản hồi từ 3 
 
 ### 1. Ghi chép thu hoạch từ 3 người dùng
 
-* **Người dùng 1 (Bạn Minh - Học viên mới)**: Bạn lúng túng ở Phương án A vì không biết bôi đen dòng nào bị lỗi. Ở Phương án C, bạn bấm nút chấp nhận đè code ngay mà không đọc bản xem trước. Bạn chốt chọn **Phương án B** vì các câu hỏi trắc nghiệm gợi mở giúp bạn hiểu được tại sao mình lại truy cập sai cấu trúc JSON lồng nhau.
+* **Người dùng 1 (Bạn Minh - Học viên mới)**: Bạn lúng túng ở Phương án A vì chưa tự tin gõ code. Ở Phương án C, bạn bấm nút chấp nhận đè code ngay mà không đọc bản xem trước. Bạn chốt chọn **Phương án B** vì các câu hỏi trắc nghiệm gợi mở giúp bạn hiểu được tại sao mình lại truy cập sai cấu trúc JSON lồng nhau.
 * **Người dùng 2 (Bạn Linh - Học viên chuyển ngành)**: Bạn thích sự gợi mở tư duy của Phương án B, nhưng ở bước cuối cùng trước khi bấm điền code, bạn muốn nhìn thấy bảng so sánh code cũ-mới dạng Diff như ở Phương án C. Bạn chọn **Phương án B kết hợp bảng xem trước của C ở bước cuối**.
-* **Người dùng 3 (Bạn Hoàng - Lập trình viên nâng cao)**: Bạn thao tác rất nhanh ở Phương án A, bôi đen dòng 4, đọc gợi ý giải thích và tự gõ sửa code. Ở Phương án B bạn bấm nút bỏ qua câu hỏi ngay vì thấy tốn thời gian. Bạn chốt chọn **Phương án A** vì muốn giữ 100% quyền tự viết code.
+* **Người dùng 3 (Bạn Hoàng - Lập trình viên nâng cao)**: Bạn thao tác rất nhanh ở Phương án A, gõ đè trực tiếp trong trình soạn thảo, đọc gợi ý giải thích và tự sửa code. Ở Phương án B bạn bấm nút bỏ qua câu hỏi ngay vì thấy tốn thời gian. Bạn chốt chọn **Phương án A** vì muốn giữ 100% quyền tự viết code.
 
 ---
 
@@ -121,4 +133,4 @@ Sau khi thảo luận lúc **10h55 sáng**, cả nhóm thống nhất hướng c
 
 1. **AI đã hỗ trợ nhóm ở đâu?**: AI giúp nhóm gợi ý các góc nhìn phân chia vai trò Human-AI, tạo dữ liệu mẫu bài tập Python JSON và hỗ trợ viết code HTML/JS cho giao diện thử nghiệm.
 2. **AI có điểm nào chưa tốt?**: Ban đầu AI đề xuất 3 phương án chỉ khác nhau về hình thức hiển thị (như cửa sổ bật lên hay thanh bên), làm mất đi bản chất khác biệt về quyền quyết định của con người.
-3. **Nhóm đã tự điều chỉnh điều gì?**: Nhóm đã tự thiết kế lại 3 phương án theo đúng mức độ chủ động (từ tự làm hoàn toàn đến đối thoại gợi mở và đề xuất tự động), đồng thời tự bổ sung nút Undo 1-Click và nút bỏ qua câu hỏi để đảm bảo quyền kiểm soát cho người học.
+3. **Nhóm đã tự điều chỉnh điều gì?**: Nhóm đã tự thiết kế lại 3 phương án theo đúng mức độ chủ động (từ giải thích thủ công đến đối thoại gợi mở và đề xuất tự động), đồng thời tự bổ sung nút Undo 1-Click và nút bỏ qua câu hỏi để đảm bảo quyền kiểm soát cho người học.

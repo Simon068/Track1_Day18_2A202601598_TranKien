@@ -20,16 +20,16 @@
         </div>
         <div class="option-switcher">
             <button id="btn-opt-a" class="btn-opt active" onclick="switchOption('A')">
-                <i class="fa-solid fa-circle-question"></i> Phương án A: Giải thích thủ công
+                <i class="fa-solid fa-circle-question"></i> Phương án A: Explainer
             </button>
             <button id="btn-opt-b" class="btn-opt" onclick="switchOption('B')">
-                <i class="fa-solid fa-brain"></i> Phương án B: Chẩn đoán Socratic
+                <i class="fa-solid fa-brain"></i> Phương án B: Socratic
             </button>
             <button id="btn-opt-c" class="btn-opt" onclick="switchOption('C')">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> Phương án C: Đề xuất tự động
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Phương án C: Auto-Patch
             </button>
             <button id="btn-reset" class="btn-reset" onclick="resetPrototype()">
-                <i class="fa-solid fa-rotate-right"></i> Reset về ban đầu
+                <i class="fa-solid fa-rotate-right"></i> Reset Code Gốc
             </button>
         </div>
     </header>
@@ -45,23 +45,25 @@
     <!-- MAIN IDE LAYOUT -->
     <main class="main-container">
         
-        <!-- LEFT PANEL: CODE EDITOR & TEST CASES -->
+        <!-- LEFT PANEL: EDITABLE CODE EDITOR & 5 TEST CASES -->
         <section class="editor-section">
             <div class="card-header">
                 <h2><i class="fa-brands fa-python"></i> Bài Tập Python: Xử Lý Dữ Liệu Doanh Thu VLearn</h2>
-                <span class="task-tag"><i class="fa-solid fa-list-check"></i> 3 Test Cases</span>
+                <span class="task-tag"><i class="fa-solid fa-list-check"></i> 5 Test Cases</span>
             </div>
 
             <div class="task-description">
-                <p><strong>Yêu cầu bài tập:</strong> Hoàn thành hàm <code>calculate_category_revenue(data)</code> để tính tổng doanh thu theo từng danh mục sản phẩm từ danh sách đơn hàng JSON.</p>
+                <p><strong>Yêu cầu bài tập:</strong> Hoàn thành hàm <code>calculate_category_revenue(data)</code> để tính tổng doanh thu theo từng danh mục sản phẩm từ danh sách đơn hàng JSON. Bạn có thể tự do chỉnh sửa, gõ thêm hoặc xóa mã nguồn trực tiếp trong ô gõ bên dưới.</p>
             </div>
 
-            <!-- TEST CASES SELECTOR TABS -->
+            <!-- 5 TEST CASES SELECTOR TABS -->
             <div class="testcases-bar">
                 <span class="tc-label"><i class="fa-solid fa-vial"></i> Dữ liệu thử nghiệm:</span>
-                <button class="tc-tab active" id="tc-tab-1" onclick="selectTestCase(1)">Test Case 1 (Đơn lồng nhau)</button>
-                <button class="tc-tab" id="tc-tab-2" onclick="selectTestCase(2)">Test Case 2 (Nhiều danh mục)</button>
-                <button class="tc-tab" id="tc-tab-3" onclick="selectTestCase(3)">Test Case 3 (Dữ liệu thiếu key)</button>
+                <button class="tc-tab active" id="tc-tab-1" onclick="selectTestCase(1)">TC 1: Đơn lồng nhau</button>
+                <button class="tc-tab" id="tc-tab-2" onclick="selectTestCase(2)">TC 2: Đa danh mục</button>
+                <button class="tc-tab" id="tc-tab-3" onclick="selectTestCase(3)">TC 3: Danh mục mới</button>
+                <button class="tc-tab" id="tc-tab-4" onclick="selectTestCase(4)">TC 4: Giá lớn</button>
+                <button class="tc-tab" id="tc-tab-5" onclick="selectTestCase(5)">TC 5: Đơn rỗng</button>
             </div>
 
             <!-- DATA FIXTURE PREVIEW BOX -->
@@ -69,35 +71,27 @@
                 <!-- Dynamic JSON fixture content -->
             </div>
 
-            <!-- CODE EDITOR CONTAINER -->
+            <!-- REAL EDITABLE CODE EDITOR -->
             <div class="code-editor-wrap">
                 <div class="editor-header">
-                    <div class="file-name"><i class="fa-solid fa-code"></i> main.py</div>
-                    <button class="btn-select-line" id="btn-select-line-4" onclick="toggleSelectLine4()">
-                        <i class="fa-solid fa-arrow-pointer"></i> Bôi đen dòng 4 (Code nghi ngờ lỗi)
-                    </button>
+                    <div class="file-name"><i class="fa-solid fa-code"></i> main.py (Tự do gõ / sửa / xóa code)</div>
+                    <span class="editor-status-tag" id="editor-status-tag"><i class="fa-solid fa-pencil"></i> Gõ code trực tiếp bên dưới</span>
                 </div>
-                <div class="code-content">
-<pre><span class="ln">1</span> def calculate_category_revenue(data):
-<span class="ln">2</span>     revenue = {}
-<span class="ln">3</span>     for item in data['orders']:
-<span class="ln">4</span> <span id="code-line-4" class="code-line-highlight">        cat = item['category']  <span class="comment"># <-- KeyError xảy ra ở đây!</span></span>
-<span class="ln">5</span>         price = item['price'] * item['quantity']
-<span class="ln">6</span>         revenue[cat] = revenue.get(cat, 0) + price
-<span class="ln">7</span>     return revenue</pre>
+                <div class="code-editor-container">
+                    <textarea id="real-code-editor" class="real-code-editor" spellcheck="false" oninput="onCodeInput()"></textarea>
                 </div>
             </div>
 
             <!-- EDITOR ACTION CONTROLS -->
             <div class="editor-controls">
                 <button class="btn-action btn-run" onclick="runTests()">
-                    <i class="fa-solid fa-play"></i> Chạy 3 Test Cases (Run Tests)
+                    <i class="fa-solid fa-play"></i> Chạy 5 Test Cases (Run Tests)
                 </button>
                 <button class="btn-action btn-stuck" id="btn-simulate-stuck" onclick="simulateStuck()">
-                    <i class="fa-solid fa-clock"></i> Giả lập học viên bị kẹt 45s
+                    <i class="fa-solid fa-clock"></i> Giả lập kẹt 45s
                 </button>
                 <button class="btn-action btn-undo hidden" id="btn-undo-patch" onclick="undoPatch()">
-                    <i class="fa-solid fa-rotate-left"></i> Undo 1-Click (Khôi phục code cũ)
+                    <i class="fa-solid fa-rotate-left"></i> Undo 1-Click
                 </button>
             </div>
 
@@ -108,7 +102,7 @@
                     <span id="test-summary-status" class="summary-neutral">Chưa chạy test</span>
                 </div>
                 <div id="terminal-output" class="terminal-text">
-                    <span class="status-neutral">Sẵn sàng. Nhấn "Chạy 3 Test Cases" để bắt đầu kiểm thử mã nguồn...</span>
+                    <span class="status-neutral">Sẵn sàng. Hãy chỉnh sửa code và nhấn "Chạy 5 Test Cases" để kiểm thử...</span>
                 </div>
             </div>
         </section>
@@ -123,21 +117,18 @@
                     <span class="agency-tag tag-dont-act">USER-LED (DON'T ACT)</span>
                 </div>
                 <div class="ai-body">
-                    <p class="ai-intro">Bôi đen dòng code bị lỗi ở bảng bên trái và bấm nút dưới đây để yêu cầu AI giải thích nguyên nhân mà không sửa hộ code.</p>
+                    <p class="ai-intro">Bấm nút bên dưới để AI phân tích mã nguồn bạn vừa tự gõ và giải thích bối cảnh mà không can thiệp đè code.</p>
                     
-                    <button id="btn-ask-explainer" class="btn-ai-primary" onclick="triggerOptionAExplainer()" disabled>
-                        <i class="fa-solid fa-magnifying-glass"></i> Hỏi AI giải thích dòng 4
+                    <button id="btn-ask-explainer" class="btn-ai-primary" onclick="triggerOptionAExplainer()">
+                        <i class="fa-solid fa-magnifying-glass"></i> Phân tích đoạn code hiện tại
                     </button>
 
                     <div id="opt-a-result" class="ai-result-card hidden">
-                        <div class="evidence-badge">
-                            <i class="fa-solid fa-circle-exclamation"></i> <strong>Bằng chứng lỗi:</strong> Dòng 4 gặp lỗi <code>KeyError: 'category'</code>.
+                        <div id="opt-a-status-badge" class="evidence-badge">
+                            <!-- Dynamic analysis result -->
                         </div>
-                        <div class="explanation-text">
-                            <strong>Phân tích từ Trợ lý AI:</strong> Phần tử <code>item</code> là một dictionary chứa đối tượng con <code>product</code>. Đòn bế tắc xảy ra vì <code>category</code> nằm bên trong <code>item['product']</code> chứ không nằm trực tiếp ở cấp ngoài cùng.
-                        </div>
-                        <div class="hint-box">
-                            💡 <strong>Gợi ý sửa thủ công:</strong> Đổi <code>item['category']</code> thành <code>item['product']['category']</code> trong khung gõ code.
+                        <div id="opt-a-analysis-text" class="explanation-text">
+                            <!-- Dynamic analysis text -->
                         </div>
                         <div class="ai-actions">
                             <button class="btn-sub" onclick="resetOptionA()">Đóng gợi ý</button>
@@ -154,12 +145,12 @@
                 </div>
                 <div class="ai-body">
                     <div id="opt-b-idle" class="ai-intro">
-                        <p>Nhấn nút <strong>"Chạy 3 Test Cases"</strong>. Khi phát hiện bài test bị thất bại, Người thầy AI sẽ tự động xuất hiện để chẩn đoán tư duy của bạn.</p>
+                        <p>Nhấn nút <strong>"Chạy 5 Test Cases"</strong>. Nếu mã nguồn của bạn chạy bị lỗi, Người thầy AI sẽ xuất hiện với câu hỏi chẩn đoán.</p>
                     </div>
 
                     <div id="opt-b-quiz" class="ai-quiz-card hidden">
                         <div class="evidence-badge">
-                            ⚠️ <strong>Phát hiện bế tắc:</strong> Test Cases thất bại do <code>KeyError</code>.
+                            ⚠️ <strong>Phát hiện bế tắc:</strong> Bài test bị thất bại do KeyError.
                         </div>
                         
                         <!-- STEP 1 -->
@@ -174,7 +165,7 @@
                         <!-- STEP 2 -->
                         <div id="b-step-2" class="quiz-step hidden">
                             <div class="step-success">✅ Đúng rồi! Category nằm lồng trong đối tượng product.</div>
-                            <p class="quiz-question"><strong>Câu hỏi chẩn đoán 2/2:</strong> Cú pháp Python nào giúp truy cập an toàn mà không làm sập chương trình?</p>
+                            <p class="quiz-question"><strong>Câu hỏi chẩn đoán 2/2:</strong> Cú pháp Python nào giúp truy cập an toàn?</p>
                             <div class="quiz-options">
                                 <button class="btn-quiz-opt" onclick="answerBStep2(true)">A. <code>item['product']['category']</code></button>
                                 <button class="btn-quiz-opt" onclick="answerBStep2(false)">B. <code>item.get('category')</code></button>
@@ -183,14 +174,14 @@
 
                         <!-- FINISH -->
                         <div id="b-step-finish" class="quiz-step hidden">
-                            <div class="step-success">🎉 Xuất sắc! Bạn đã tự thông suốt bản chất lỗi sai.</div>
-                            <p>Bấm nút bên dưới để điền tự động mã đã sửa vào bài tập và chạy lại kiểm thử.</p>
-                            <button class="btn-ai-primary" onclick="applyBCodeFix()">⚡ Điền mã đã sửa & Chạy lại 3 Test Cases</button>
+                            <div class="step-success">🎉 Xuất sắc! Bạn đã thông suốt bản chất lỗi sai.</div>
+                            <p>Bấm nút bên dưới để tự động cập nhật mã đúng vào ô gõ code và chạy thử 5 Test Cases.</p>
+                            <button class="btn-ai-primary" onclick="applyBCodeFix()">⚡ Cập nhật code & Chạy lại 5 Test Cases</button>
                         </div>
 
                         <div class="ai-actions">
                             <button class="btn-sub btn-danger" onclick="skipBQuiz()">
-                                ⏭ Bỏ qua câu hỏi & Xem đáp án ngay (Nút thoát khẩn cấp)
+                                ⏭ Bỏ qua câu hỏi & Xem đáp án ngay
                             </button>
                         </div>
                     </div>
@@ -205,7 +196,7 @@
                 </div>
                 <div class="ai-body">
                     <div id="opt-c-idle" class="ai-intro">
-                        <p>Nhấn nút <strong>"⏱ Giả lập học viên bị kẹt 45s"</strong>. AI sẽ tự động lập dự thảo mã sửa sẵn để bạn xem trước và phê duyệt.</p>
+                        <p>Nhấn nút <strong>"⏱ Giả lập kẹt 45s"</strong>. AI sẽ tự động lập dự thảo mã sửa sẵn để bạn duyệt.</p>
                     </div>
 
                     <div id="opt-c-patch" class="ai-patch-card hidden">
