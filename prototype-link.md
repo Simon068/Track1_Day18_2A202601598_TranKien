@@ -1,45 +1,23 @@
-# Prototype Links — A/B/C
+# PROTOTYPE LINK & HƯỚNG DẪN TRẢI NGHIỆM MICRO-PROTOTYPES (DAY 18)
 
-**Nhóm:** VLearn AI Tutor  
-**Case:** Case A — AI Tutor: Diagnostic Refresher & Code Troubleshooting  
-**Ngày:** 18/08/2026
-
----
-
-## Link Prototype Chung (Single-Page Web App — chứa cả 3 Options)
-
-**Chạy local:** Mở file `index.html` trực tiếp trong trình duyệt.
-
-**Link deploy (nếu có):** [ĐIỀN LINK DEPLOY — ví dụ GitHub Pages, Netlify, hoặc Vercel]
+**Sản phẩm**: VLearn - Case A: AI Tutor (Diagnostic Refresher)  
+**Nhóm thực hiện**: Trần Kiên (2A202601598) & Nguyễn Phú Quang (2A202602017)  
 
 ---
 
-## Hướng dẫn trải nghiệm
+## 🔗 Đường Dẫn & Tệp Ứng Dụng Micro-prototype
 
-### Option A: User-Led On-Demand Explainer
-1. Chọn tab **"Option A"** ở header.
-2. Bấm **"🔍 Bôi đen dòng 4"** để chọn dòng code lỗi.
-3. Bấm **"❓ Hỏi AI giải thích dòng 4"** để xem AI phân tích.
-4. Tự đọc gợi ý và hiểu nguyên nhân — AI KHÔNG sửa code hộ.
-
-### Option B: Co-Creation Socratic Diagnostic
-1. Chọn tab **"Option B"** ở header.
-2. Bấm **"▶ Run Test Cases"** — test sẽ Failed.
-3. Socratic Mentor tự động xuất hiện với 2 câu hỏi trắc nghiệm gợi mở.
-4. Trả lời từng bước để tự suy luận ra cách sửa.
-5. Nếu muốn thoát nhanh: bấm **"⏭ Bỏ qua đối thoại & Xem đáp án"**.
-
-### Option C: AI-Led Proactive Patch & Review
-1. Chọn tab **"Option C"** ở header.
-2. Bấm **"⏱ Giả lập kẹt 45s"** (mô phỏng học viên bị tắc).
-3. AI tự động hiện bảng **Diff Code Preview** với bản vá đề xuất.
-4. Chọn **"✅ Apply Patch"** hoặc **"❌ Dismiss"**.
-5. Nếu đổi ý: bấm **"↩ Undo AI Patch"** để khôi phục code cũ.
+- **Tệp ứng dụng web chính**: `index.html`
+- **Tệp giao diện CSS**: `style.css`
+- **Tệp logic tương tác JS**: `app.js`
 
 ---
 
-## Lưu ý cho Tester
+## 🚀 Hướng Dẫn Chạy & Thao Tác Thử Nghiệm A/B/C
 
-- Cả 3 options dùng **cùng bài tập**, **cùng dữ liệu JSON**, **cùng lỗi KeyError**.
-- Bấm **"🔄 Reset Common Context"** để quay về trạng thái ban đầu trước khi thử option tiếp theo.
-- Facilitator Annotation (dải vàng phía trên) chỉ dành cho người quan sát, KHÔNG giải thích cho tester.
+1. Mở tệp `index.html` trực tiếp trong trình duyệt web bất kỳ (Chrome, Edge, Firefox, Safari).
+2. Sử dụng các nút chuyển đổi trên thanh Header để trải nghiệm 3 phương án:
+   - **Option A (User-Led Explainer)**: Nhấn nút *"Bôi đen dòng 4"* trong Code Editor $\rightarrow$ Nhấn nút *"Hỏi AI giải thích dòng 4"* để đọc phần phân tích nguyên nhân lỗi `KeyError: 'category'`.
+   - **Option B (Co-Creation Socratic)**: Nhấn nút *"▶ Run Test Cases"* ở bảng bên trái $\rightarrow$ Hệ thống báo lỗi Failed và AI Socratic Mentor xuất hiện chuỗi 2 câu trắc nghiệm chẩn đoán tư duy $\rightarrow$ Trả lời đúng cả 2 câu để mở khóa nút điền code tự động (Có tích hợp nút khẩn cấp *"Skip Quiz"*).
+   - **Option C (AI-Led Proactive Patch)**: Nhấn nút *"⏱ Giả lập kẹt 45s"* $\rightarrow$ AI Auto-Patch Copilot xuất hiện bảng so sánh **Diff Code (Đỏ = Code cũ lỗi, Xanh = Code mới sửa)** $\rightarrow$ Nhấn nút *"Apply Patch"* để đè code và PASS test cases 100% (Có nút *"Undo 1-Click"* để khôi phục code cũ).
+3. Nhấn nút **`🔄 Reset Common Context`** ở góc phải Header bất kỳ lúc nào để đưa ứng dụng về trạng thái ban đầu.

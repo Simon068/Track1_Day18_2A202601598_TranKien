@@ -1,86 +1,33 @@
-# Group Feedback Synthesis
+# GROUP FEEDBACK SYNTHESIS (DAY 18)
 
-**Nhóm:** VLearn AI Tutor  
-**Case:** Case A — AI Tutor: Diagnostic Refresher & Code Troubleshooting  
-**Ngày tổng hợp:** 18/08/2026  
-**Số phiên test:** 3 phiên (3 tester ngoài nhóm, mỗi người test cả A/B/C)
+**Sản phẩm**: VLearn - Case A: AI Tutor  
+**Nhóm**: Trần Kiên (2A202601598) & Nguyễn Phú Quang (2A202602017)  
 
 ---
 
-## 1. Tóm tắt 3 Feedback Notes
+## 1. Group Feedback Synthesis Table
 
-### Feedback Note 1 — Tester: Minh (Mới học Python, 3 tháng, background Quản trị Kinh doanh)
-- **Facilitate bởi:** Trần Kiên
-- **Option thích nhất:** Option B
-- **Observation chính:** Minh chia sẻ Option B giúp hiểu bản chất tại sao hổng kiến thức dictionary lồng nhau. Option C quá nhanh làm lười tư duy — bấm Apply sau 5 giây mà không hiểu rõ. Option A thì không biết dòng nào lỗi để bôi đen, do dự 40 giây.
-- **Hành vi đáng chú ý:** Minh đọc kỹ cả 2 câu hỏi trắc nghiệm và thử sai 1 lần ở bước 1 trước khi chọn đúng. Không dùng nút Skip Quiz. Nói: "Mình muốn thử trả lời xem mình hiểu đến đâu."
-
-### Feedback Note 2 — Tester: Linh (Chuyển ngành Data Science, background Marketing, 6 tháng học)
-- **Facilitate bởi:** Nguyễn Phú Quang
-- **Option thích nhất:** Option B kết hợp hiển thị bảng Diff code của Option C ở bước cuối
-- **Observation chính:** Linh muốn tự tư duy qua quiz NHƯNG cũng muốn nhìn thấy code đúng dạng so sánh trực quan (Diff Red/Green) ở bước cuối để đối chiếu trước khi tự gõ. Ở Option B đơn thuần, Linh hơi lo lắng khi tự gõ code sửa vì sợ gõ sai cú pháp.
-- **Hành vi đáng chú ý:** Ở Option C, Linh bấm Apply ngay mà không đọc kỹ Diff — sau đó nói: "Nếu có quiz trước thì mình sẽ đọc Diff kỹ hơn vì đã hiểu context rồi."
-
-### Feedback Note 3 — Tester: Hoàng (Lập trình viên nâng cao, 2 năm kinh nghiệm Python)
-- **Facilitate bởi:** Nguyễn Phú Quang
-- **Option thích nhất:** Option A
-- **Observation chính:** Vì đã có tư duy lập trình căn bản, Hoàng chỉ cần AI chỉ vị trí lỗi và giải thích ngắn gọn là tự gõ sửa được ngay trong 10 giây. Quiz ở Option B cảm thấy thừa và mất thời gian với người đã biết.
-- **Hành vi đáng chú ý:** Hoàng bôi đen dòng 4 chỉ trong 3 giây và đọc gợi ý xong sửa code dưới 10 giây. Ở Option C, Hoàng bấm Dismiss ngay vì "không cần AI sửa hộ, mình tự sửa nhanh hơn."
+| Tiêu chí | Feedback 1 (Minh) | Feedback 2 (Linh) | Feedback 3 (Hoàng) | Pattern hoặc Khác biệt |
+| :--- | :--- | :--- | :--- | :--- |
+| **First Action** | Đứng im ở A, hào hứng bấm Quiz ở B. | Bấm Run Test ở B, thử Undo ở C. | Bôi đen dòng 4 ở A và tự gõ sửa code. | Người mới cần trigger tự động (B/C); người giỏi thích thủ công (A). |
+| **Breakdown chính** | Không biết dòng lỗi ở A, nhắm mắt bấm duyệt ở C. | Muốn thấy Diff code rõ hơn ở cuối luồng B. | Cảm thấy phiền phức với câu hỏi trắc nghiệm ở B. | Option C thiếu rào cản tư duy; Option B thiếu bản xem trước Diff code. |
+| **Cách lấy lại control** | Dùng nút Tự động điền code ở B. | Dùng nút Undo 1-Click ở C. | Tự tay gõ đè sửa code ở A. | Nút Undo và Edit tay là 2 đường thoát quan trọng nhất. |
+| **Option Chọn** | **Option B** | **Option B (kèm Diff)** | **Option A** | 2/3 chọn Option B làm lõi; 1/3 chọn Option A. |
+| **Trade-off** | Đánh đổi thời gian làm quiz lấy sự hiểu bài. | Đánh đổi thêm 1 bước xem Diff để an tâm. | Đánh đổi việc tự tìm lỗi lấy tốc độ viết code. | Tốc độ vs Tiếp thu sâu bản chất. |
 
 ---
 
-## 2. Pattern & Khác biệt
+## 2. Group Next Change & Still Unproven
 
-### Pattern chung (xuất hiện ở ≥2 tester):
+- **Một Next Change nhóm chốt**:  
+  **Kết hợp Option B và Option C thành luồng "Socratic Mentor with Diff Review"**:
+  1. Khi `Run Test Failed`, hệ thống giữ nguyên luồng đối thoại Socratic 2 bước của Option B để buộc người học tư duy.
+  2. Ở bước hoàn thành, thay vì cho phép đè code trực tiếp, hệ thống sẽ mở ra bảng **Diff Code Preview (của Option C)** hiển thị so sánh Red/Green để người học duyệt lần cuối trước khi Apply, đi kèm nút **Undo 1-Click**.
 
-1. **Quiz giúp hiểu gốc rễ:** Cả Minh và Linh đều đánh giá cao luồng Socratic Quiz (Option B) vì buộc phải suy nghĩ trước khi nhận đáp án → tạo ra learning thực sự, không chỉ "sửa xong cho pass".
+- **Evidence dẫn tới quyết định này**:
+  - Feedback 2 (Linh) yêu cầu trực tiếp việc hiển thị Diff preview ở bước cuối luồng Socratic.
+  - Feedback 1 (Minh) chứng minh rằng nếu chỉ có Option C thì học viên nhắm mắt bấm Apply mà không học được gì; nhưng nếu chỉ có Option B thì học viên thiếu hình ảnh minh họa mã nguồn thay đổi.
 
-2. **Diff trực quan hữu ích ở bước cuối:** Linh và Minh đều muốn nhìn thấy so sánh code cũ-mới dạng Diff (Red/Green) trước khi tự gõ sửa — giúp giảm lo lắng gõ sai cú pháp.
-
-3. **Option C gây thụ động nếu không có bước tư duy trước:** Cả Minh và Linh đều bấm Apply trong vòng 5–10 giây mà không đọc kỹ Diff. Linh thừa nhận "nếu có quiz trước thì sẽ đọc Diff kỹ hơn" → quiz tạo mindset chủ động.
-
-4. **Không ai dùng Undo:** Cả 3 tester đều không sử dụng nút "Undo 1-Click" — cho thấy khi đã Apply thì tin tưởng kết quả. (Lưu ý: có thể do task đơn giản, chưa chắc đúng với task phức tạp hơn.)
-
-### Khác biệt quan trọng:
-
-| Yếu tố | Minh & Linh (mới/chuyển ngành) | Hoàng (nâng cao) |
-| :--- | :--- | :--- |
-| **Cần quiz dẫn dắt** | Có — giúp hiểu gốc rễ, không chỉ sửa bề mặt | Không — quiz cảm thấy thừa, mất thời gian |
-| **Phản ứng với Option A** | Khó khăn vì không tự biết dòng nào lỗi | Dễ dàng — tìm ra dòng lỗi ngay 3 giây |
-| **Phản ứng với Option C** | Bấm Apply nhắm mắt, không hiểu sâu | Dismiss ngay — muốn tự sửa |
-| **Nhu cầu chính** | Hiểu TẠI SAO lỗi + hướng dẫn từng bước | Chỉ cần biết CHỖ NÀO lỗi là đủ |
-
----
-
-## 3. Next Change
-
-**Kết hợp Option B + Option C thành luồng "Socratic Mentor with Diff Review":**
-
-1. **Bước 1 — Socratic Quiz (từ Option B):** Khi `Run Test Failed`, giữ luồng trắc nghiệm chẩn đoán 2 bước để buộc người học tư duy và tự suy luận nguyên nhân lỗi.
-
-2. **Bước 2 — Diff Preview (từ Option C):** Sau khi hoàn thành quiz đúng, hiển thị bảng Diff Code Preview (Red = code cũ lỗi, Green = code đã sửa) để người học đối chiếu kết quả suy luận với code thực tế trước khi Apply.
-
-3. **Recovery paths giữ nguyên:**
-   - Nút "Skip Quiz" → nhảy thẳng đến Diff (cho người đã biết như Hoàng).
-   - Nút "Dismiss" → từ chối patch, quay lại tự gõ.
-   - Nút "Undo 1-Click" → khôi phục code cũ sau Apply.
-
-**Lý do dựa trên evidence:**
-- 2/3 tester (Minh, Linh) đánh giá cao quiz + diff kết hợp.
-- Linh nói rõ: "Nếu có quiz trước thì mình sẽ đọc Diff kỹ hơn" → quiz tạo mindset chủ động đọc.
-- Hoàng không bị ảnh hưởng tiêu cực vì có thể Skip Quiz ngay → vẫn phục vụ được user nâng cao.
-- Luồng kết hợp giải quyết được cả vấn đề "thụ động bấm Apply" (từ observation Option C) lẫn vấn đề "lo gõ sai cú pháp" (từ observation Option B đơn thuần).
-
----
-
-## 4. Still Unproven (Sau cả 3 phiên test)
-
-1. **Thời lượng luồng kết hợp:** Chưa biết luồng Quiz + Diff liên tiếp có tốn > 3 phút khiến học viên nản không — chỉ test từng option riêng lẻ, chưa test luồng kết hợp end-to-end.
-
-2. **Nhóm đối tượng chưa cover:** Chỉ test 3 người với profile cụ thể (mới 3 tháng / chuyển ngành 6 tháng / nâng cao 2 năm) — chưa biết phản ứng của học viên lớn tuổi hoặc người hoàn toàn không có background máy tính.
-
-3. **Độ phức tạp lỗi khác:** Lỗi `KeyError` trên dictionary lồng nhau tương đối đơn giản và có 1 đáp án đúng rõ ràng — chưa biết luồng Socratic Quiz có hoạt động tốt với lỗi logic phức tạp hơn (ví dụ: race condition, off-by-one, infinite loop) mà câu hỏi chẩn đoán khó thiết kế.
-
-4. **Hiệu ứng novelty:** Tester có thể thích quiz vì mới lạ — chưa biết sau 10–15 lần gặp quiz liên tiếp trong 1 buổi học có còn kiên nhẫn không, hay sẽ luôn bấm Skip.
-
-5. **Kích thước Diff:** Với task đơn giản (sửa 1 dòng), Diff rất dễ đọc — chưa biết khi patch sửa 5–10 dòng thì học viên có đọc nổi bảng Diff hay lại nhắm mắt Apply.
+- **Still Unproven (Điều vẫn chưa được chứng minh)**:
+  - Chưa chứng minh được mô hình B+C có duy trì được sự hứng thú của học viên khi áp dụng cho các bài tập lớn kéo dài nhiều tuần hay không.
+  - Chưa biết liệu học viên có bắt đầu lạm dụng nút "Skip Quiz" để vượt qua luồng Socratic khi khối lượng bài tập tăng lên hay không.

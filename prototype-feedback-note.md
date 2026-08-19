@@ -1,79 +1,41 @@
-# Prototype Feedback Note — Phiên do Trần Kiên Facilitate
+# PROTOTYPE FEEDBACK NOTES (DAY 18)
 
-**Facilitator:** Trần Kiên (MHV: 2A202601598)  
-**Tester:** Minh — Học viên mới học Python (3 tháng kinh nghiệm, background Quản trị Kinh doanh)  
-**Ngày test:** 18/08/2026  
-**Thời lượng phiên:** ~12 phút (trải nghiệm lần lượt cả 3 options)
+**Sản phẩm**: VLearn - Case A: AI Tutor (Micro-prototypes A/B/C)  
+**Người thực hiện Facilitate**: Trần Kiên (`2A202601598`) & Nguyễn Phú Quang (`2A202602017`)  
 
 ---
 
-## 1. Bối cảnh Tester
+## 📝 FEEDBACK NOTE 1 — TESTER MINH (HỌC VIÊN MỚI HỌC PYTHON)
 
-- **Background:** Minh là sinh viên năm 3 ngành Quản trị Kinh doanh, tự học Python Data Science trên VLearn được 3 tháng. Chưa có nền tảng lập trình trước đó.
-- **Relevant Context Question:** "Trong tuần qua khi học lập trình, bạn có từng gặp phải lỗi code kẹt khiến bạn tốn 30–40 phút tìm kiếm bên ngoài không?"
-- **Câu trả lời của Tester:** "Có, tuần trước mình gặp lỗi IndexError khi xử lý list, phải Google 35 phút mà vẫn không hiểu tại sao index bị lệch. Cuối cùng phải hỏi bạn cùng lớp."
-
----
-
-## 2. Observation — Option A (User-Led Explainer)
-
-| Thời điểm | Hành vi quan sát được | Ghi chú |
-| :--- | :--- | :--- |
-| 0:00–0:15 | Minh đọc đề bài và xem data fixture JSON. Mắt lướt qua code nhưng không nhận ra ngay dòng nào lỗi. | Không tự nhận biết vị trí bế tắc |
-| 0:15–0:55 | Minh nhìn quanh giao diện, thấy nút "Bôi đen dòng 4" nhưng do dự 40 giây trước khi bấm. Hỏi thầm "bôi đen là sao nhỉ?" | Khó khăn với khái niệm "bôi đen code" |
-| 0:55–1:20 | Bấm nút bôi đen → dòng 4 highlight xanh → bấm "Hỏi AI giải thích dòng 4". Đọc phần phân tích AI. | Tương tác thành công sau khi tìm ra nút |
-| 1:20–1:50 | Đọc gợi ý `item['product']['category']`, gật đầu, nhưng không tự gõ sửa code được (prototype không có ô gõ thật). | Hiểu gợi ý nhưng muốn được sửa luôn |
-
-**Phát biểu đáng chú ý của Tester (verbatim):**
-- "À, vậy category nằm trong product hả? Mình cứ tưởng nó nằm ngay ngoài item."
-- "Nhưng mà... mình phải tự gõ lại dòng code à? Có nút sửa luôn không?"
+- **Tester/Context**: Học viên mới bắt đầu học lập trình Python 2 tuần, hay bị kẹt ở lỗi `SyntaxError` và `KeyError`.
+- **Observed Actions**:
+  - Ở Option A: Loay hoay 1 phút không biết bấm vào đâu vì chưa quen bôi đen code trong editor.
+  - Ở Option B: Hào hứng bấm trả lời 2 câu hỏi trắc nghiệm Socratic, chọn đúng cả 2 và bấm tự động điền code.
+  - Ở Option C: Thấy thông báo 45s hiện lên, bấm nút "Apply Patch" ngay mà không đọc nội dung Diff.
+- **Interpreted**: Học viên mới bị quá tải thông tin với Option A (cần tự biết dòng lỗi) và dễ thụ động ở Option C (bấm duyệt bỏ qua đọc). Option B giúp định hướng tư duy vừa sức nhất.
+- **Option được chọn**: **Option B (Co-Creation Socratic Guide)**.
+- **Lý do & Trade-off**: Option B giúp hiểu tại sao lại sai. Option C quá nhanh khiến không học được gì, còn Option A thì không biết dòng nào lỗi để bôi đen.
 
 ---
 
-## 3. Observation — Option B (Co-Creation Socratic)
+## 📝 FEEDBACK NOTE 2 — TESTER LINH (HỌC VIÊN CHUYỂN NGÀNH DATA)
 
-| Thời điểm | Hành vi quan sát được | Ghi chú |
-| :--- | :--- | :--- |
-| 0:00–0:10 | Minh bấm "Run Test Cases". Terminal hiện lỗi KeyError đỏ. Minh nhíu mày đọc traceback. | Phản ứng tự nhiên với lỗi |
-| 0:10–0:40 | Quiz bước 1 xuất hiện. Minh đọc câu hỏi, nhìn sang trái xem JSON mẫu. Chọn đáp án A ("Trực tiếp thuộc item") — SAI. Alert hiện lên. | Lần đầu chọn sai — chưa nhìn kỹ JSON |
-| 0:40–1:10 | Minh đọc lại JSON fixture ở panel trái, thấy `"product": {"category": "Electronics"}`. Chọn đáp án B — ĐÚNG. | Tự suy luận được sau khi nhìn lại data |
-| 1:10–1:40 | Quiz bước 2 xuất hiện. Minh chọn ngay đáp án A (`item['product']['category']`) — ĐÚNG ngay lần đầu. | Đã hiểu cấu trúc lồng nhau |
-| 1:40–2:10 | Thông báo "Xuất sắc!" hiện ra. Minh bấm "Tự động điền mã đã sửa". Code chuyển xanh. Run Test → PASSED. | Hoàn thành trọn vẹn luồng B |
-
-**Phát biểu đáng chú ý của Tester (verbatim):**
-- "Ờ hay, câu hỏi này bắt mình phải nhìn lại cái JSON thay vì đoán bừa."
-- "Cái này hay, mình hiểu TẠI SAO lỗi chứ không phải chỉ sửa xong là xong."
-- Minh KHÔNG dùng nút "Skip Quiz" — nói: "Mình muốn thử trả lời xem mình hiểu đến đâu."
+- **Tester/Context**: Đã học được 3 tuần, hay tự tìm ChatGPT nhưng ghét việc ChatGPT cho đáp án quá dài.
+- **Observed Actions**:
+  - Ở Option B: Trả lời xong 2 câu hỏi gợi mở, gợi ý "Hãy kết hợp Option C để tôi xem code cũ khác code mới thế nào trước khi bấm Apply".
+  - Ở Option C: Bấm "Apply Patch", sau đó thử bấm nút "Undo 1-Click" để xem lại đoạn code cũ tự viết rồi mới bấm Apply lại.
+- **Interpreted**: Tester cần cả sự gợi mở tư duy (Option B) lẫn sự minh bạch trực quan dưới dạng so sánh Diff (Option C).
+- **Option được chọn**: **Option B kết hợp hiển thị bảng Diff code của Option C ở bước cuối**.
+- **Lý do & Trade-off**: Muốn tự suy nghĩ ở Option B, nhưng đến bước cuối cần nhìn thấy rõ đoạn code bị thay đổi như ở Option C để chắc chắn hệ thống không làm hỏng logic khác.
 
 ---
 
-## 4. Observation — Option C (AI Proactive Patch)
+## 📝 FEEDBACK NOTE 3 — TESTER HOÀNG (LẬP TRÌNH VIÊN NÂNG CAO)
 
-| Thời điểm | Hành vi quan sát được | Ghi chú |
-| :--- | :--- | :--- |
-| 0:00–0:10 | Minh bấm "Giả lập kẹt 45s". Terminal hiện lỗi. Diff card xuất hiện ngay bên phải. | AI chủ động đề xuất |
-| 0:10–0:15 | Minh lướt mắt qua bảng Diff (dòng đỏ/xanh) khoảng 5 giây. Không đọc phần "Lý do sửa". | Đọc lướt, không suy ngẫm |
-| 0:15–0:20 | Bấm "Apply Patch" ngay. Code chuyển xanh. Run Test → PASSED. | Nhắm mắt apply — xác nhận trade-off |
-| — | Không bấm Dismiss. Không bấm Undo. Không quay lại xem code đã sửa thành gì. | Thụ động — chỉ muốn pass nhanh |
-
-**Phát biểu đáng chú ý của Tester (verbatim):**
-- "Ô, nhanh ghê! Bấm cái là xong luôn."
-- (Khi được hỏi "Bạn có hiểu tại sao code sửa như vậy không?"): "Ờ... chắc là do cái dictionary nằm trong nhau? Nhưng mình không chắc lắm."
-
----
-
-## 5. Tổng hợp từ phiên này
-
-**Option Tester thích nhất:** Option B — Lý do: "Mình hiểu được bản chất tại sao lỗi. Option C nhanh nhưng xong rồi vẫn mơ hồ. Option A thì mình không biết bôi đen chỗ nào."
-
-**Hành vi bất ngờ:**
-- Ở Option A, Minh do dự 40 giây vì không hiểu khái niệm "bôi đen code" — đây là rào cản không lường trước với người mới.
-- Ở Option C, Minh bấm Apply chỉ sau 5 giây đọc Diff — xác nhận nguy cơ thụ động mà nhóm đã dự đoán trong trade-off.
-
-**Điểm kẹt của Tester:**
-- Option A: Không tự nhận biết được dòng nào lỗi → phụ thuộc hoàn toàn vào nút "Bôi đen dòng 4" đã có sẵn.
-- Option C: Không có điểm kẹt nhưng cũng không có điểm học — tester pass test mà không hiểu sâu.
-
-**Gợi ý cải tiến từ observation:**
-- Kết hợp quiz của Option B (buộc suy nghĩ) với Diff preview của Option C (trực quan hóa kết quả) sẽ vừa đảm bảo learning vừa cho feedback trực quan.
-- Có thể thêm một câu hỏi xác nhận sau khi Apply Patch: "Bạn giải thích được tại sao code sửa như vậy không?" để chống thụ động.
+- **Tester/Context**: Đã có tư duy lập trình căn bản, học Python làm ngôn ngữ thứ 2.
+- **Observed Actions**:
+  - Ở Option A: Thao tác rất nhanh, bôi đen dòng 4, đọc gợi ý giải thích và tự gõ sửa code trong editor mà không cần nút tự động điền.
+  - Ở Option B: Bấm nút "Skip Quiz & Xem đáp án ngay" sau câu hỏi đầu tiên vì thấy mất thời gian.
+- **Interpreted**: Người đã có nền tảng không thích AI đóng vai "thầy giáo hỏi bài" (Option B) mà muốn giữ 100% quyền kiểm soát (Option A).
+- **Option được chọn**: **Option A (User-Led Explainer)**.
+- **Lý do & Trade-off**: Chỉ cần AI chỉ ra chỗ lồng dictionary sai là tự sửa được. Option B làm đứt đoạn suy nghĩ.
