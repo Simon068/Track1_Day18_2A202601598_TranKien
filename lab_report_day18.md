@@ -1,253 +1,124 @@
-# BÁO CÁO LAB DAY 18: VLEARN MICRO-PROTOTYPES & A/B/C TESTING
+# BÁO CÁO KẾT QUẢ THỰC HÀNH LAB DAY 18
+## Thiết Kế Và Thử Nghiệm Tùy Chọn Giao Diện Trợ Lý AI Tutor (VLearn)
 
-**Sản phẩm**: VLearn - Nền tảng học tập trực tuyến cho kỹ năng số  
-**Case Study**: Case A — AI Tutor: Diagnostic Refresher & Code Troubleshooting  
-**Thành viên nhóm thực hiện**: Trần Kiên & Nguyễn Phú Quang  
-**Ngày thực hiện**: 18/08/2026  
-
----
-
-## CHẶNG 1: TỔNG HỢP EVIDENCE & CHỐT HYPOTHESIS PROBLEM
-
-### 1. Evidence Huddle Table (Tổng hợp từ dữ liệu thực tế Day 02)
-
-| Practice Note / Nguồn quan sát | User đã thực sự làm/nói gì? (Hành vi & Phát biểu thực tế) | Điều nhóm đang diễn giải (Phân tích nguyên nhân) |
-| :--- | :--- | :--- |
-| **Practice Note 1 (Học viên chuyển ngành Kinh tế)** | Khi học bài Data Wrangling với Pandas đến khái niệm Vectorization và Broadcasting, học viên bị nghẽn lại, phải dừng video để tìm kiếm trên Google và ChatGPT trong 38 phút. Kết quả tra cứu trả về nhiều lý thuyết toán cao cấp gây hoang mang, làm đứt gãy mạch học và phải học lại video từ đầu vào ngày hôm sau. | Học viên bị tắc do lỗ hổng kiến thức nền (Prerequisite Knowledge Gap). Học viên không chê bài giảng dở mà tự thấy bị hổng kiến thức cũ, tốn nhiều thời gian tra cứu ngoài gây đứt gãy luồng học. |
-| **Practice Note 2 (Sinh viên Marketing học SQL)** | Khi làm bài tập về LEFT JOIN và INNER JOIN bị sai kết quả, học viên nhận thấy slide bài giảng chỉ có 2 hình tròn sơ đồ Venn tĩnh quá trừu tượng, nên phải copy bảng sang Excel tự xóa dòng chạy thử sai 15 phút mới hiểu. | Học viên thiếu công cụ hỗ trợ trực quan (Poor Pedagogical Framing). Họ không thiếu kiến thức nền nhưng cần ví dụ tương tác trực quan gắn liền với dữ liệu thực tế đang chạy. |
-| **Practice Note 3 (Học viên đi làm học Python)** | Khi bấm nút Gợi ý có sẵn trên hệ thống LMS, học viên chỉ nhận được một câu lý thuyết chung chung cố định, không gắn gì với dòng code lỗi KeyError hiện tại đang viết dở. | Công cụ hỗ trợ hiện tại thiếu ngữ cảnh thực tế (context-awareness) và không liên kết trực tiếp với mã nguồn hoặc trạng thái bài tập cụ thể của người học. |
+**Thực hiện bởi**: Trần Kiên & Nguyễn Phú Quang  
+**Thời gian làm bài**: Từ 09h00 sáng đến 11h00 sáng, ngày 18/08/2026  
 
 ---
 
-### 2. Hypothesis Problem Chốt Cùng Nhóm
+## CHẶNG 1: TỔNG HỢP GHI CHÉP THỰC TẾ & XÁC ĐỊNH VẤN ĐỀ NÒNG CỐT
 
-> **Khi** thực hành bài tập lập trình & phân tích dữ liệu phức tạp trên VLearn,  
-> **Học viên mới / Chuyển ngành** gặp khó khăn trong việc **nhận diện lỗ hổng kiến thức nền & xác định hướng sửa lỗi từng bước**  
-> **vì** bài giảng và công cụ hỗ trợ hiện tại quá chung chung, trừu tượng hoặc trả về ngay lời giải trọn gói mà không giải thích bối cảnh,  
-> **dẫn đến** học viên bị mất phương hướng, tốn 30-40 phút tra cứu vô ích ngoài hệ thống, gây đứt gãy mạch học và dễ bỏ dở khóa học.
+### 1. Tổng hợp ghi chép quan sát thực tế từ người học
 
-- **Evidence ban đầu hỗ trợ giả thuyết**:
-  - Học viên chuyển ngành mất 38 phút tra Google/ChatGPT do hổng kiến thức nền toán/mảng và phải học lại video từ đầu.
-  - Học viên Marketing mất 15 phút mò mẫm Excel vì slide lý thuyết quá trừu tượng, thiếu minh họa tương tác.
-  - Học viên đi làm phản hồi gợi ý cũ của LMS hoàn toàn vô dụng do không bắt được context dòng code lỗi.
+Vào lúc **09h15 sáng**, nhóm đặt 3 bản ghi chép phỏng vấn từ bài thực hành trước lên bàn để cùng rà soát lại các tình huống người học gặp bế tắc:
 
-- **Điều vẫn chưa được chứng minh (Still Unproven)**:
-  - Liệu việc AI chia nhỏ hỗ trợ thành các câu hỏi chẩn đoán gợi mở (Diagnostic Socratic hinting) có thật sự giúp học viên hoàn thành bài tập nhanh hơn, hay lại gây bực mình vì tốn thêm thao tác tương tác?
-  - Mức độ sẵn sàng tự sửa code của học viên đến đâu khi AI chỉ chỉ ra vị trí lỗi và cho ví dụ minh họa thay vì sửa hộ 100%?
+* **Trường hợp 1 (Học viên chuyển ngành Kinh tế)**: Khi học bài xử lý dữ liệu Pandas đến đoạn thuật ngữ Vectorization và Broadcasting, học viên bị khựng lại vì không hiểu bản chất. Bạn phải dừng video, mở Google và ChatGPT tìm hiểu suốt 38 phút. Tuy nhiên các tài liệu ngoài chủ yếu giải thích bằng toán cao cấp khiến bạn hoang mang, đứt gãy mạch tư duy và sáng hôm sau phải xem lại video từ đầu.
+* **Trường hợp 2 (Sinh viên Marketing học SQL)**: Khi làm bài tập về kết hợp bảng (LEFT JOIN và INNER JOIN) bị sai kết quả, học viên thấy hình vẽ lý thuyết trên slide quá trừu tượng. Bạn phải copy bảng sang Excel tự xóa dòng chạy thử suốt 15 phút mới hiểu được cách dữ liệu chuyển động.
+* **Trường hợp 3 (Học viên đi làm học Python)**: Khi bấm nút Gợi ý có sẵn trên hệ thống học cũ, học viên chỉ nhận được câu lý thuyết chung chung cố định, không gắn gì với dòng code lỗi KeyError hiện tại đang viết dở.
 
 ---
 
-### 3. Gate 1 Self-Check — Evidence Continuity
+### 2. Phát biểu vấn đề nòng cốt (Hypothesis Problem)
 
-- [x] Đã đủ cấu trúc Hypothesis Problem: `User` (Học viên mới/chuyển ngành VLearn), `Situation` (Khi thực hành bài tập lập trình & dữ liệu), `Job` (Nhận diện lỗ hổng kiến thức & xác định hướng sửa từng bước), `Barrier` (Công cụ hiện tại chung chung/trừu tượng hoặc cho ngay lời giải trọn gói), `Consequence` (Mất 30-40 phút tra cứu ngoài, đứt gãy mạch học, nản lòng).
-- [x] Trích dẫn đúng 100% quan sát thực tế từ dữ liệu phỏng vấn Day 02.
-- [x] Nêu rõ điểm chưa được chứng minh (Still Unproven).
+Từ các ghi chép thực tế trên, nhóm thống nhất phát biểu bài toán chung:
 
----
-
-## CHẶNG 2: CHỌN BA SOLUTION OPTIONS & DISTANCE CHECK
-
-### 1. Solution Parking Lot & Comparison Contract
-
-Kế thừa Solution Directive của **Case A (AI Tutor: Diagnostic Refresher)** từ Day 02:
-
-#### Những thứ giữ nguyên cho cả A/B/C:
-- **Target User**: Học viên mới bắt đầu / chuyển ngành học Python & Data Science trên VLearn.
-- **Situation**: Học viên đang thực hành bài tập Python xử lý mảng JSON/Pandas thì gặp sự cố KeyError và kẹt kiến thức nền.
-- **Task**: Xác định nguyên nhân lỗi, hiểu khái niệm nền bị hổng và sửa mã nguồn đạt 100% PASSED.
-- **Desired Outcome**: Vượt qua điểm thắt kiến thức mà không cần thoát khỏi VLearn để tra cứu bên ngoài.
-- **Content/Data Fixture**: Bài tập *"Tính tổng doanh thu theo danh mục sản phẩm từ file dữ liệu JSON"*. Code mẫu bị lỗi `KeyError: 'category'` do truy cập sai cấu trúc dictionary lồng nhau.
+> **Khi** thực hành các bài tập lập trình và phân tích dữ liệu trên VLearn,  
+> **Học viên mới và học viên chuyển ngành** gặp khó khăn trong việc **nhận biết lỗ hổng kiến thức nền và tìm hướng sửa lỗi từng bước**  
+> **vì** bài giảng cùng công cụ hỗ trợ hiện tại quá chung chung, trừu tượng hoặc đưa ngay lời giải sẵn mà không giải thích bối cảnh,  
+> **dẫn đến** học viên bị mất phương hướng, tốn 30-40 phút tìm kiếm lan man bên ngoài, đứt gãy mạch học và dễ nản lòng bỏ dở khóa học.
 
 ---
 
-### 2. Bảng So Sánh 3 Solution Options
+## CHẶNG 2: THIẾT KẾ 3 PHƯƠNG ÁN HỖ TRỢ A, B, C
 
-| Thành phần | Option A: User-Led On-Demand Explainer | Option B: Co-Creation Socratic Diagnostic | Option C: AI-Led Proactive Patch & Review |
-| :--- | :--- | :--- | :--- |
-| **Solution Mechanism** | Tra cứu đúng điểm bế tắc theo yêu cầu. AI phân tích khối code bôi đen và giải thích khái niệm nền bị hổng kèm ví dụ minh họa. | Chẩn đoán lỗ hổng tư duy theo phương pháp Socratic. AI kích hoạt 2-3 câu hỏi trắc nghiệm dẫn dắt khi Test Run bị lỗi. | Tự động phát hiện bế tắc và lập bản thảo mã đã sửa (Draft Patch Preview) kèm bảng so sánh Diff code cho User duyệt. |
-| **User làm gì?** | Bôi đen dòng code nghi ngờ, nhấn "Hỏi AI dòng này", đọc phần chẩn đoán khái niệm nền và tự tay sửa code. | Chạy "Run Test", trả lời các câu hỏi chẩn đoán của AI để tự suy luận ra cấu trúc lồng dictionary và tự sửa code. | Xem thông báo AI chủ động bật lên khi kẹt > 45s, đọc bảng Diff so sánh code cũ-mới, bấm "Apply Patch" hoặc "Dismiss". |
-| **AI làm gì?** | Chờ lệnh. Phân tích đúng dòng code được bôi đen và trích xuất khái niệm nền bị hổng (`item['product']['category']`). Không sửa code hộ. | Tự động phát hiện Test Failed, sinh câu hỏi trắc nghiệm 2 bước kiểm tra nhận thức về cấu trúc dữ liệu của học viên. | Tự động phát hiện học viên gõ vô hướng > 45s, tự tạo mã đã sửa hoàn chỉnh dạng Diff để User duyệt. |
-| **Trigger** | **Manual Trigger**: Học viên chủ động bôi đen code và bấm "Hỏi AI dòng này". | **Event Trigger**: Hệ thống phát hiện lượt `Run Test` trả về `Failed`. | **Autonomous Trigger**: AI phát hiện thời gian kẹt (idle/error loop > 45s). |
-| **Trade-off chính** | Tốn công thao tác bôi đen code; yêu cầu User phải tự nhận biết vị trí kẹt. Đổi lại giữ 100% quyền kiểm soát. | Tốn thêm 2 phút làm câu hỏi trắc nghiệm; có thể gây sốt ruột nếu User muốn có đáp án ngay. Đổi lại khắc phục tận gốc lỗ hổng nền. | Nguy cơ làm User thụ động (bấm nút Duyệt mà không đọc); AI có thể làm phiền khi User đang tự nghĩ. Đổi lại sửa lỗi nhanh nhất. |
+Vào lúc **09h35 sáng**, nhóm bắt tay vào xây dựng 3 giải pháp cùng giải quyết bài tập Python *"Tính tổng doanh thu theo danh mục sản phẩm từ dữ liệu JSON"*. Bài tập này đang gặp lỗi `KeyError: 'category'` do người học truy cập sai cấu trúc dictionary lồng nhau.
 
----
+Cả 3 phương án đều dùng chung bài tập và dữ liệu mẫu, chỉ khác nhau ở cách phân chia vai trò giữa người học và AI:
 
-### 3. Distance Check (Kiểm Tra Khoảng Cách Không Dùng UI)
+1. **Phương án A — Trợ lý giải thích theo yêu cầu (User-Led Explainer)**:
+   * *Cách hoạt động*: Học viên chủ động bôi đen dòng code bị lỗi và bấm nút "Hỏi AI giải thích". Trợ lý AI chỉ phân tích nguyên nhân lỗi và cho ví dụ gợi ý lý thuyết. Học viên phải tự gõ sửa code, AI tuyệt đối không sửa hộ.
+   * *Ưu - nhược điểm*: Học viên giữ 100% quyền kiểm soát, không lo AI can thiệp sâu, nhưng tốn công tự nhận biết vị trí lỗi.
 
-1. **Option A khác Option B vì**: Option A đòi hỏi User phải tự nhận biết vị trí bế tắc và chủ động yêu cầu giải thích dòng code đó (User-initiated query), trong khi Option B tự động khởi động quy trình chẩn đoán đối thoại gợi mở ngay khi lượt chạy thử bài tập bị thất bại (Event-triggered co-reasoning).
-2. **Option B khác Option C vì**: Option B bắt buộc User phải chủ động tư duy và trả lời các câu hỏi trắc nghiệm chẩn đoán để tự tay sửa mã nguồn (User co-creates solution), trong khi Option C tự động lập bản thảo mã đã sửa hoàn chỉnh (Diff patch) và chỉ yêu cầu User duyệt hoặc từ chối (AI-generated, User-reviewed).
-3. **Option A khác Option C vì**: Option A duy trì cách tiếp cận do người học dẫn dắt tuyệt đối và không nhận lại bất kỳ đoạn code viết sẵn nào, trong khi Option C để AI tự động phát hiện khó khăn qua thời gian thực và trực tiếp viết sẵn đoạn code khắc phục cho người học phê duyệt.
+2. **Phương án B — Người thầy chẩn đoán gợi mở (Co-Creation Socratic Guide)**:
+   * *Cách hoạt động*: Khi học viên bấm chạy thử bài tập (Run Test) và bị báo lỗi, AI sẽ tự động xuất hiện với 2 câu hỏi trắc nghiệm chẩn đoán để dẫn dắt học viên tự suy luận ra cấu trúc lồng nhau. Khi trả lời đúng, AI mới mở khóa gợi ý hoàn chỉnh.
+   * *Ưu - nhược điểm*: Học viên hiểu sâu bản chất và khắc phục tận gốc lỗ hổng tư duy, nhưng tốn thêm 1-2 phút trả lời câu hỏi.
 
----
-
-### 4. Gate 2 Self-Check — Meaningful Options
-
-- [x] Cả 3 options dùng chung User, Situation, Task, Desired Outcome và Data Fixture.
-- [x] 3 options nằm trên các mốc phổ tương tác Human-AI khác nhau rõ rệt (User-led -> Co-creation -> AI-led).
-- [x] Đã hoàn thành Distance Check 3 câu không dùng từ ngữ về màu sắc, layout hay wording giao diện.
+3. **Phương án C — Trợ lý đề xuất bản vá tự động (AI-Led Proactive Patch)**:
+   * *Cách hoạt động*: Khi học viên gõ loay hoay hoặc bị kẹt quá 45 giây, AI chủ động hiện thông báo kèm bảng so sánh mã nguồn (Code cũ màu đỏ vs Code đề xuất màu xanh). Học viên đọc qua và bấm nút "Chấp nhận" để đè code sửa hoặc "Từ chối".
+   * *Ưu - nhược điểm*: Sửa lỗi rất nhanh, nhưng có nguy cơ khiến học viên thụ động bấm duyệt mà không đọc hiểu.
 
 ---
 
-## CHẶNG 3: HUMAN–AI DESIGN PASS
+## CHẶNG 3: BẢNG PHÂN CHIA VAI TRÒ VÀ NÚT THOÁT KHẨN CẤP
 
-### 1. Human–AI Decision Table
+Vào lúc **09h55 sáng**, nhóm thiết kế chi tiết cơ chế tương tác và các đường thoát lấy lại kiểm soát cho người học:
 
-| Tiêu chí | Option A: User-Led Explainer | Option B: Co-Creation Socratic Guide | Option C: AI-Led Proactive Patch |
-| :--- | :--- | :--- | :--- |
-| **Expectation (Kỳ vọng & Giới hạn)** | Trực quan hóa nhãn *"AI Code Explainer (Chỉ giải thích, không sửa code)"*. Học viên hiểu rõ AI chỉ phân tích đoạn code được chọn và đưa ra gợi ý lý thuyết. | Thông báo rõ *"Socratic Diagnostic Mentor"*. Học viên biết AI sẽ không cho đáp án ngay mà đưa ra 2 câu hỏi chẩn đoán để bù hổng kiến thức. | Hiện nhãn *"Auto-Patch Copilot"*. Cảnh báo rõ: AI sẽ tạo bản thảo sửa code khi phát hiện học viên bị tắc nhưng **không tự đè code**. |
-| **Role & Agency (Vai trò & Quyền quyết định)** | **Mode: DON'T ACT.**  <br>User chọn code và gõ hỏi. AI giải thích. User tự tay gõ sửa code.  <br>*Hậu quả khi sai*: Thấp (User chỉ tốn 30s đọc). | **Mode: ASK.**  <br>AI đưa ra câu hỏi trắc nghiệm chẩn đoán. User chọn đáp án để mở khóa manh mối.  <br>*Hậu quả khi sai*: Trung bình (User suy luận sai bước đầu). | **Mode: ASK BEFORE APPLYING.**  <br>AI tự động phát hiện kẹt và lập mã sửa sẵn. User bấm "Apply" mới đè code.  <br>*Hậu quả khi sai*: Cao (Code hỏng thêm nếu nhắm mắt duyệt). |
-| **Evidence & Uncertainty (Tín hiệu & Độ không chắc chắn)** | Trích dẫn đúng khối code bôi đen và thông số lỗi `KeyError: 'category'`. Hiển thị nhãn *"Dựa trên 100% dòng code bôi đen"*. | Dẫn chứng từ thông báo lỗi `Run Test Failed: KeyError`. Hiện tỷ lệ tự tin gợi mở (*"85% học viên hổng kiến thức dict lồng nhau"*). | Thể hiện bằng bảng So sánh Diff (Đỏ = Code cũ lỗi, Xanh = Code mới sửa). Hiển thị độ tự tin bản vá (*"Độ chính xác dự kiến: 95%"*). |
-| **Control & Recovery (Kiểm soát & Phục hồi)** | - Ô nhập code luôn mở để tự gõ sửa. <br>- Nút *"Hỏi lại góc nhìn khác"*. <br>- Nút *"Đóng gợi ý"*. | - Nút *"Bỏ qua đối thoại & Xem đáp án"*. <br>- Nút *"Thử lại câu hỏi"*. <br>- Nút *"Quay lại trạng thái code ban đầu"*. | - Nút *"Apply Patch"* (Chấp nhận đè code). <br>- Nút *"Modify"* (Chỉnh sửa trước khi đè). <br>- Nút *"Dismiss"* (Từ chối). <br>- Nút *"Undo 1-Click"* (Khôi phục code cũ). |
+* **Sự bạch minh bạch về vai trò**:
+  * Ở Phương án A, giao diện ghi rõ: *"AI chỉ giải thích lý thuyết, không sửa mã nguồn hộ bạn"*.
+  * Ở Phương án B, giao diện ghi rõ: *"AI sẽ đưa ra câu hỏi chẩn đoán để bạn tự suy luận"*.
+  * Ở Phương án C, giao diện ghi rõ: *"AI đề xuất mã sửa sẵn, bạn cần xem kỹ trước khi chấp nhận"*.
 
----
-
-### 2. Gate 3 Self-Check — Human Control
-
-- [x] Mỗi Option đã làm rõ vai trò User làm gì, AI làm gì.
-- [x] Mức độ chủ động (Agency) của AI phù hợp với mức độ rủi ro (Option A = Don't Act, Option B = Ask, Option C = Ask before apply).
-- [x] Mỗi Option đều có ít nhất một đường thoát/lấy lại kiểm soát rõ ràng (Control & Recovery Path).
+* **Cơ chế khôi phục khi AI đưa ra hướng dẫn chưa chuẩn (Control & Recovery)**:
+  * Ở Phương án A: Học viên có thể đóng ô gợi ý bất kỳ lúc nào và ô tự gõ code luôn mở.
+  * Ở Phương án B: Tích hợp nút khẩn cấp *"Bỏ qua câu hỏi & Xem ngay lời giải"* để học viên không bị mắc kẹt vĩnh viễn trong câu hỏi trắc nghiệm nếu đang gấp.
+  * Ở Phương án C: Cung cấp nút **"Undo 1-Click"** ngay sau khi bấm duyệt để học viên có thể trả lại 100% đoạn code cũ tự viết nếu thấy AI sửa không đúng ý.
 
 ---
 
-## CHẶNG 4: BUILD BA MICRO-PROTOTYPE TƯƠNG TÁC WEB (80 PHÚT)
+## CHẶNG 4: XÂY DỰNG MÔ HÌNH THỬ NGHIỆM WEB (MICRO-PROTOTYPE)
 
-Nhóm đã hoàn thành xây dựng ứng dụng web tương tác nhẹ (Single-Page Micro-prototype) chạy trực tiếp tại file `index.html` với đầy đủ các tiêu chí testable.
+Từ **10h15 sáng đến 10h40 sáng**, nhóm hoàn thành bản demo tương tác web chạy trực tiếp tại file `index.html`.
 
-### 1. Scope Chuẩn & 70% Shared Components
-- **Common Context Screen**: Bài tập Python *"Tính tổng doanh thu theo danh mục sản phẩm từ file dữ liệu JSON"*.
-- **Shared Content / Data Fixture**: Dữ liệu JSON mẫu lồng nhau `{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}]}`.
-- **Shared Component & Visual Style**: Giao diện Code Editor Python `main.py`, thanh chỉ số dòng (Line 1-7), nút `Run Test Cases` và Terminal kiểm thử giả lập.
-- **Shared Task & Desired Outcome**: Sửa lỗi `KeyError: 'category'` tại dòng 4 để kết quả kiểm thử đạt PASSED 100%.
-
----
-
-### 2. Definition of Testable (Độ Sẵn Sàng Để Test)
-- **Tự thao tác**: Tester mở tệp `index.html` và tự do chuyển đổi A/B/C qua thanh Header mà không cần facilitator giải thích.
-- **Cùng xuất phát điểm**: Cả 3 options đều bắt đầu từ đúng 1 bài tập Python và 1 lỗi `KeyError`.
-- **Canned AI Output & Control/Recovery**:
-  - Option A có nút *"Đóng gợi ý"* và ô gõ sửa tay.
-  - Option B có nút khẩn cấp *"Bỏ qua đối thoại & Xem đáp án"*.
-  - Option C có nút *"Apply Patch"*, nút *"Dismiss"* và nút *"Undo 1-Click"* để hoàn tác.
-- **Reset Path**: Nút **`🔄 Reset Common Context`** đưa ứng dụng về trạng thái ban đầu chỉ trong 1-click.
+* **Nội dung dùng chung**: Đều có khung soạn thảo code Python `main.py`, dữ liệu mẫu JSON lồng nhau `orders.product.category`, nút "Run Test Cases" và màn hình kiểm thử Terminal.
+* **Ghi chú ngoài màn hình cho người điều phối (Facilitator Annotations)**: Nhóm đặt thanh ghi chú màu vàng ở trên cùng giao diện để hướng dẫn người quan sát (không hiện cho người test đọc):
+  * *Ở Phương án A*: Quan sát xem người học có biết bôi đen dòng lỗi không. Không hướng dẫn người học cách chọn dòng.
+  * *Ở Phương án B*: Quan sát xem người học có đọc câu hỏi trắc nghiệm không. Không chọn hộ đáp án.
+  * *Ở Phương án C*: Quan sát xem người học có đọc bản xem trước mã nguồn hay bấm duyệt luôn. Không gợi ý bấm nút duyệt.
+* **Nút Reset**: Đã tích hợp nút `🔄 Reset Common Context` giúp đưa giao diện về trạng thái ban đầu chỉ với 1 cú nhấp chuột.
 
 ---
 
-### 3. Build Order (Tiến Trình 80 Phút Sprint)
-| Phút | Việc đã thực hiện trong Sprint |
-| :--- | :--- |
-| **0–10** | Dựng Common Context, giao diện Code Editor `main.py` và Data Fixture JSON lồng nhau. |
-| **10–55** | Trần Kiên phụ trách chính luồng Option A & C; Nguyễn Phú Quang phụ trách luồng Option B Socratic Quiz. |
-| **55–65** | Bổ sung các điểm lấy lại kiểm soát (Control & Recovery): Nút Undo 1-Click, nút Skip Quiz và nhãn Uncertainty. |
-| **65–75** | Hai thành viên tự test chéo (Cross-test) option do người kia phụ trách để phát hiện lỗi đứt gãy tương tác. |
-| **75–80** | Chuẩn hóa A/B/C trên Header, kiểm tra nút Reset và gắn thanh Facilitator Annotations. |
+## CHẶNG 5: KỊCH BẢN PHỎNG VẤN VÀ THỬ NGHIỆM
+
+Vào lúc **10h40 sáng**, nhóm chuẩn bị sẵn kịch bản trò chuyện tự nhiên với người trải nghiệm:
+
+* **Câu hỏi mở đầu**: *"Trong tuần vừa rồi khi tự học lập trình, bạn có từng gặp phải bài tập nào bị lỗi kẹt khiến bạn tốn 30-40 phút tìm kiếm bên ngoài không?"*
+* **Lời dặn dò trước khi thử**: *"Chúng mình đang thử nghiệm 3 cách thiết kế hỗ trợ học tập, không kiểm tra kỹ năng của bạn. Không có đáp án đúng hay sai. Bạn cứ thoải mái tự thao tác và nói to suy nghĩ của mình nhé; mình sẽ không hướng dẫn thao tác."*
+* **Các câu hỏi thảo luận sau khi dùng thử**:
+  1. *"Trong 3 cách A, B, C thì bạn thích chọn cách nào nhất cho bài tập này? Vì sao?"*
+  2. *"Bạn muốn tự tay mình làm phần nào và muốn AI hỗ trợ phần nào?"*
+  3. *"Có điểm nào ở cách bạn chọn làm bạn cảm thấy chưa thực sự thoải mái không?"*
+* **3 câu hỗ trợ khi người dùng im lặng**:
+  1. *"Bạn cứ thoải mái chia sẻ suy nghĩ hiện tại của mình nhé."*
+  2. *"Bạn đang dự định bấm vào đâu tiếp theo trên màn hình?"*
+  3. *"Theo bạn thì tính năng này nên hoạt động như thế nào cho tiện nhất?"*
 
 ---
 
-### 4. Prototype Annotations (Ghi chú định hướng ngoài Frame cho Facilitator)
+## CHẶNG 6: GHI CHÉP QUAN SÁT VÀ KẾT LUẬN CÙNG NHÓM
 
-Hiển thị trực tiếp ở Banner màu vàng phía trên cùng giao diện (`#annotation-box`):
+Từ **10h45 sáng đến 11h00 sáng**, nhóm tổng hợp phản hồi từ 3 người dùng trải nghiệm thực tế:
 
-```text
-OPTION A (User-Led Explainer):
-- We expect the tester to: Tự nhận biết lỗi, bôi đen dòng 4 và chủ động bấm "Hỏi AI giải thích dòng 4". Tester tự tay sửa code.
-- Watch for: Tester có biết cách chọn dòng code lỗi không, hay lúng túng tìm nút sửa tự động.
-- Do not explain: Không hướng dẫn cách bôi đen hay cách sửa code Python.
+### 1. Ghi chép thu hoạch từ 3 người dùng
 
-OPTION B (Co-Creation Socratic):
-- We expect the tester to: Bấm "Run Test Cases", gặp lỗi Failed và trả lời 2 câu trắc nghiệm chẩn đoán để tự suy luận.
-- Watch for: Tester có đọc kỹ câu hỏi trắc nghiệm không hay bấm nút Skip Quiz ngay.
-- Do not explain: Không chọn hộ đáp án A/B cho tester.
-
-OPTION C (AI-Led Proactive Patch):
-- We expect the tester to: Bấm "Giả lập kẹt 45s", đọc bảng Diff code màu xanh/đỏ và bấm Apply Patch.
-- Watch for: Tester có đọc bản Diff không hay bấm nhắm mắt Apply, và có dùng nút Undo khi đổi ý không.
-- Do not explain: Không gợi ý bấm Apply Patch hay giải thích cơ chế ngầm.
-```
+* **Người dùng 1 (Bạn Minh - Học viên mới)**: Bạn lúng túng ở Phương án A vì không biết bôi đen dòng nào bị lỗi. Ở Phương án C, bạn bấm nút chấp nhận đè code ngay mà không đọc bản xem trước. Bạn chốt chọn **Phương án B** vì các câu hỏi trắc nghiệm gợi mở giúp bạn hiểu được tại sao mình lại truy cập sai cấu trúc JSON lồng nhau.
+* **Người dùng 2 (Bạn Linh - Học viên chuyển ngành)**: Bạn thích sự gợi mở tư duy của Phương án B, nhưng ở bước cuối cùng trước khi bấm điền code, bạn muốn nhìn thấy bảng so sánh code cũ-mới dạng Diff như ở Phương án C. Bạn chọn **Phương án B kết hợp bảng xem trước của C ở bước cuối**.
+* **Người dùng 3 (Bạn Hoàng - Lập trình viên nâng cao)**: Bạn thao tác rất nhanh ở Phương án A, bôi đen dòng 4, đọc gợi ý giải thích và tự gõ sửa code. Ở Phương án B bạn bấm nút bỏ qua câu hỏi ngay vì thấy tốn thời gian. Bạn chốt chọn **Phương án A** vì muốn giữ 100% quyền tự viết code.
 
 ---
 
-### 5. Gate 4 Self-Check — Test-Ready
-- [x] Người không build có thể tự mở `index.html`, thực hiện cùng 1 task qua A/B/C và reset về ban đầu mà không cần giải thích.
+### 2. Quyết định thay đổi tiếp theo của nhóm (Group Next Change)
+
+Sau khi thảo luận lúc **10h55 sáng**, cả nhóm thống nhất hướng cải tiến cho phiên bản tiếp theo:
+
+> **Kết hợp Phương án B và Phương án C thành luồng "Hướng dẫn gợi mở kèm xem trước mã nguồn"**:
+> 1. Khi chạy thử code bị lỗi, hệ thống giữ nguyên 2 câu hỏi trắc nghiệm chẩn đoán của Phương án B để buộc học viên phải suy luận.
+> 2. Ở bước hoàn thành, thay vì điền code ngay, hệ thống sẽ mở bảng **Xem trước mã nguồn (Code Diff Preview của C)** hiển thị hai màu Đỏ/Xanh để học viên đối chiếu lần cuối trước khi áp dụng, đi kèm nút **Undo 1-Click** để hoàn tác khi cần.
 
 ---
 
-## CHẶNG 5: CHUẨN BỊ TEST (TEST PROMPT & OBSERVATION FOCUS)
+## BÁO CÁO SỬ DỤNG AI (AI SUPPORT LOG)
 
-### 1. Context & Outcome Task
-- **Relevant Context Question**: *"Trong tuần qua khi học lập trình, bạn có từng gặp phải lỗi code kẹt (Error/Stuck point) khiến bạn tốn 30-40 phút tìm kiếm bên ngoài không?"*
-- **Outcome Task**: *"Trong bài tập Python này, bạn hãy lần lượt trải nghiệm cả 3 phương án A, B, C để tìm ra nguyên nhân lỗi KeyError và sửa code đạt PASSED 100%."*
-
-### 2. 5 Observation Focus Points
-1. **First Action**: Bấm vào đâu đầu tiên khi mở từng phương án (Bôi đen code ở A, bấm Run Test ở B, chờ 45s ở C).
-2. **Hesitation & Misunderstanding**: Khựng lại ở bước nào, có hiểu đúng các câu hỏi chẩn đoán không.
-3. **Evidence Read vs Ignored**: Đọc hay bỏ qua thông báo lỗi, gợi ý lý thuyết và bảng Diff màu đỏ/xanh.
-4. **Correction & Recovery**: Lấy lại quyền kiểm soát bằng cách nào (Nút Undo, Skip Quiz hay Dismiss).
-5. **Option Choice & Trade-off**: Chọn phương án nào và chấp nhận đánh đổi điều gì (Thời gian vs Tiếp thu bản chất).
-
-### 3. Kịch Bản Facilitation & 3 Câu Cứu Hộ
-- **Opening Script**: *"Chúng mình đang thử nghiệm 3 cách thiết kế giao diện hỗ trợ học tập, không kiểm tra bạn. Không có câu trả lời đúng hoặc sai. Bạn hãy tự do thao tác và nói to điều mình đang nghĩ; mình sẽ cố gắng không hướng dẫn."*
-- **Compare Script**: 
-  - *"Trong tình huống này, bạn chọn phương án A, B hay C? Vì sao?"*
-  - *"Bạn muốn tự làm phần nào và giao cho AI làm phần nào?"*
-  - *"Điều gì ở phương án đã chọn khiến bạn chưa thực sự thoải mái?"*
-- **3 Câu cứu hộ khi Tester bị ngập ngừng**:
-  1. *"Bạn cứ thoải mái nói to suy nghĩ hiện tại của mình nhé."*
-  2. *"Bạn sẽ làm gì tiếp theo trên màn hình?"*
-  3. *"Theo bạn, tính năng này nên hoạt động như thế nào?"*
-
----
-
-## CHẶNG 6: TEST VỚI BA NGƯỜI & TỔNG HỢP GROUP NEXT CHANGE
-
-### 1. Chi Tiết 3 Prototype Feedback Notes (Phân tách 4 lớp)
-
-#### 📝 Feedback Note 1 — Tester Minh (Học viên mới học Python)
-- **Observation Note**: First action đứng im ở A, hào hứng làm quiz ở B; đọc kỹ quiz ở B nhưng bỏ qua Diff ở C; dùng nút Tự động điền ở B; chọn **Option B**.
-- **OBSERVED**: *"Option B giúp mình hiểu tại sao lại sai. Option C quá nhanh khiến mình không học được gì, còn Option A thì mình không biết dòng nào lỗi để bôi đen."*
-- **INTERPRETED**: Học viên mới bị ngợp ở Option A (cần tự chỉ định dòng lỗi) và dễ thụ động ở Option C (bấm duyệt bỏ qua đọc). Option B định hướng vừa sức nhất.
-- **DECIDED — NEXT CHANGE**: Giữ Option B làm luồng chính cho người mới, nhưng bổ sung hình ảnh xem trước code sửa ở bước cuối.
-- **STILL UNPROVEN**: Chưa biết học viên mới có kiên nhẫn làm trắc nghiệm khi bài tập kéo dài nhiều câu hỏi hay không.
-
-#### 📝 Feedback Note 2 — Tester Linh (Học viên chuyển ngành Data)
-- **Observation Note**: First action bấm Run Test ở B, thử Undo ở C; đọc kỹ cả Quiz ở B và Diff ở C; dùng nút **Undo 1-Click** ở C; chọn **Option B kết hợp Diff của C ở bước cuối**.
-- **OBSERVED**: *"Mình muốn tự suy nghĩ ở Option B, nhưng đến bước cuối mình cần nhìn thấy rõ đoạn code bị thay đổi như ở Option C để chắc chắn hệ thống không làm hỏng logic khác."*
-- **INTERPRETED**: Học viên chuyển ngành cần cả sự gợi mở tư duy (Option B) lẫn sự minh bạch trực quan dưới dạng so sánh mã nguồn Diff (Option C).
-- **DECIDED — NEXT CHANGE**: Kết hợp Option B và Option C thành luồng *"Socratic Diagnostic with Diff Review"*.
-- **STILL UNPROVEN**: Chưa rõ việc thêm bảng Diff ở bước cuối của luồng Socratic có làm kéo dài thời gian làm bài gây sốt ruột cho học viên hay không.
-
-#### 📝 Feedback Note 3 — Tester Hoàng (Lập trình viên nâng cao)
-- **Observation Note**: First action bôi đen dòng 4 ở A, tự gõ sửa code; đọc phần giải thích ở A; dùng nút **Skip Quiz** ở B; chọn **Option A**.
-- **OBSERVED**: *"Mình chỉ cần AI chỉ ra chỗ lồng dictionary sai là mình tự sửa được. Option B hỏi trắc nghiệm làm mình thấy phiền và đứt đoạn suy nghĩ."*
-- **INTERPRETED**: Người đã có nền tảng không thích AI đóng vai "thầy giáo hỏi bài" (Option B) mà muốn giữ 100% quyền kiểm soát (Option A).
-- **DECIDED — NEXT CHANGE**: Giữ nút thoát khẩn cấp *"Bỏ qua đối thoại & Xem đáp án"* (Skip Quiz) ở Option B cho học viên nâng cao.
-- **STILL UNPROVEN**: Chưa biết nhóm học viên nâng cao có sẵn sàng dùng Option A thường xuyên hay sẽ chuyển sang dùng Copilot hoàn toàn.
-
----
-
-### 2. Group Feedback Synthesis Table
-
-| Tiêu chí | Feedback 1 (Minh) | Feedback 2 (Linh) | Feedback 3 (Hoàng) | Pattern hoặc Khác biệt |
-| :--- | :--- | :--- | :--- | :--- |
-| **First Action** | Đứng im ở A, hào hứng bấm Quiz ở B. | Bấm Run Test ở B, thử Undo ở C. | Bôi đen dòng 4 ở A và tự gõ sửa code. | Người mới cần trigger tự động (B/C); người giỏi thích thủ công (A). |
-| **Breakdown chính** | Không biết dòng lỗi ở A, nhắm mắt bấm duyệt ở C. | Muốn thấy Diff code rõ hơn ở cuối luồng B. | Cảm thấy phiền phức với câu hỏi trắc nghiệm ở B. | Option C thiếu rào cản tư duy; Option B thiếu bản xem trước Diff code. |
-| **Cách lấy lại control** | Dùng nút Tự động điền code ở B. | Dùng nút Undo 1-Click ở C. | Tự tay gõ đè sửa code ở A. | Nút Undo và Edit tay là 2 đường thoát quan trọng nhất. |
-| **Option Chọn** | **Option B** | **Option B (kèm Diff)** | **Option A** | 2/3 chọn Option B làm lõi; 1/3 chọn Option A. |
-| **Trade-off** | Đánh đổi thời gian làm quiz lấy sự hiểu bài. | Đánh đổi thêm 1 bước xem Diff để an tâm. | Đánh đổi việc tự tìm lỗi lấy tốc độ viết code. | Tốc độ vs Tiếp thu sâu bản chất. |
-
----
-
-### 3. Group Next Change Chốt Cùng Nhóm & Still Unproven
-**Kết hợp Option B và Option C thành luồng "Socratic Diagnostic with Diff Review"**:
-1. Khi `Run Test Failed`, giữ luồng trắc nghiệm chẩn đoán 2 bước của Option B để buộc người học tư duy.
-2. Ở bước hoàn thành, mở ra bảng **Diff Code Preview (của Option C)** hiển thị so sánh Red/Green để người học duyệt lần cuối trước khi Apply, đi kèm nút **Undo 1-Click**.
-
-- **Evidence dẫn tới quyết định này**: Feedback 2 (Linh) yêu cầu trực tiếp việc hiển thị Diff preview ở bước cuối luồng Socratic; Feedback 1 (Minh) chứng minh Option C đơn lẻ khiến học viên lười nghĩ.
-- **Still Unproven sau 3 feedback**: Chưa chứng minh được mô hình B+C có duy trì được sự hứng thú của học viên khi áp dụng cho bài tập kéo dài nhiều tuần hay không.
-
----
-
-## 🤖 AI SUPPORT LOG
-
-- **AI đã giúp tôi ở đâu**: Gợi ý khung bảng Human-AI Decision Table, sinh dữ liệu mẫu JSON và hỗ trợ viết code HTML/JS tương tác.
-- **AI sai, hời hợt ở đâu**: Ban đầu AI gợi ý 3 options chỉ khác nhau về hình thức hiển thị giao diện (Popup vs Sidebar), làm mất đi bản chất Agency.
-- **Tôi đã tự sửa hoặc quyết định lại điều gì**: Tự tái cấu trúc 3 options theo đúng mốc Agency (User-led vs Co-creation vs AI-led), bổ sung nút Undo 1-Click và Skip Quiz.
+1. **AI đã hỗ trợ nhóm ở đâu?**: AI giúp nhóm gợi ý các góc nhìn phân chia vai trò Human-AI, tạo dữ liệu mẫu bài tập Python JSON và hỗ trợ viết code HTML/JS cho giao diện thử nghiệm.
+2. **AI có điểm nào chưa tốt?**: Ban đầu AI đề xuất 3 phương án chỉ khác nhau về hình thức hiển thị (như cửa sổ bật lên hay thanh bên), làm mất đi bản chất khác biệt về quyền quyết định của con người.
+3. **Nhóm đã tự điều chỉnh điều gì?**: Nhóm đã tự thiết kế lại 3 phương án theo đúng mức độ chủ động (từ tự làm hoàn toàn đến đối thoại gợi mở và đề xuất tự động), đồng thời tự bổ sung nút Undo 1-Click và nút bỏ qua câu hỏi để đảm bảo quyền kiểm soát cho người học.
