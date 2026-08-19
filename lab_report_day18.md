@@ -109,18 +109,65 @@ Kế thừa Solution Directive của **Case A (AI Tutor: Diagnostic Refresher)**
 
 ---
 
-## CHẶNG 4: BUILD BA MICRO-PROTOTYPE TƯƠNG TÁC WEB
+## CHẶNG 4: BUILD BA MICRO-PROTOTYPE TƯƠNG TÁC WEB (80 PHÚT)
 
-Nhóm đã hoàn thành xây dựng ứng dụng web tương tác nhẹ (Single-Page Micro-prototype) chạy trực tiếp tại file `index.html`.
+Nhóm đã hoàn thành xây dựng ứng dụng web tương tác nhẹ (Single-Page Micro-prototype) chạy trực tiếp tại file `index.html` với đầy đủ các tiêu chí testable.
 
-### 1. Scope & Kiến Trúc Dùng Chung (70% Shared Components)
+### 1. Scope Chuẩn & 70% Shared Components
 - **Common Context Screen**: Bài tập Python *"Tính tổng doanh thu theo danh mục sản phẩm từ file dữ liệu JSON"*.
-- **Shared Data Fixture**: JSON data mẫu lồng nhau `{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}]}`.
-- **Shared Task**: Tìm lỗi `KeyError: 'category'` ở dòng 4 và sửa mã nguồn đạt 100% PASSED.
+- **Shared Content / Data Fixture**: Dữ liệu JSON mẫu lồng nhau `{"orders": [{"product": {"name": "Laptop", "category": "Electronics"}, "price": 1200, "quantity": 1}]}`.
+- **Shared Component & Visual Style**: Giao diện Code Editor Python `main.py`, thanh chỉ số dòng (Line 1-7), nút `Run Test Cases` và Terminal kiểm thử giả lập.
+- **Shared Task & Desired Outcome**: Sửa lỗi `KeyError: 'category'` tại dòng 4 để kết quả kiểm thử đạt PASSED 100%.
 
-### 2. Gate 4 Self-Check — Test-Ready
-- [x] Đã có file HTML/CSS/JS hoạt động trọn vẹn tại `index.html`.
-- [x] Có đủ điểm lấy lại control và undo recovery ở cả 3 luồng.
+---
+
+### 2. Definition of Testable (Độ Sẵn Sàng Để Test)
+- **Tự thao tác**: Tester mở tệp `index.html` và tự do chuyển đổi A/B/C qua thanh Header mà không cần facilitator giải thích.
+- **Cùng xuất phát điểm**: Cả 3 options đều bắt đầu từ đúng 1 bài tập Python và 1 lỗi `KeyError`.
+- **Canned AI Output & Control/Recovery**:
+  - Option A có nút *"Đóng gợi ý"* và ô gõ sửa tay.
+  - Option B có nút khẩn cấp *"Bỏ qua đối thoại & Xem đáp án"*.
+  - Option C có nút *"Apply Patch"*, nút *"Dismiss"* và nút *"Undo 1-Click"* để hoàn tác.
+- **Reset Path**: Nút **`🔄 Reset Common Context`** đưa ứng dụng về trạng thái ban đầu chỉ trong 1-click.
+
+---
+
+### 3. Build Order (Tiến Trình 80 Phút Sprint)
+| Phút | Việc đã thực hiện trong Sprint |
+| :--- | :--- |
+| **0–10** | Dựng Common Context, giao diện Code Editor `main.py` và Data Fixture JSON lồng nhau. |
+| **10–55** | Trần Kiên phụ trách chính luồng Option A & C; Nguyễn Phú Quang phụ trách luồng Option B Socratic Quiz. |
+| **55–65** | Bổ sung các điểm lấy lại kiểm soát (Control & Recovery): Nút Undo 1-Click, nút Skip Quiz và nhãn Uncertainty. |
+| **65–75** | Hai thành viên tự test chéo (Cross-test) option do người kia phụ trách để phát hiện lỗi đứt gãy tương tác. |
+| **75–80** | Chuẩn hóa A/B/C trên Header, kiểm tra nút Reset và gắn thanh Facilitator Annotations. |
+
+---
+
+### 4. Prototype Annotations (Ghi chú định hướng ngoài Frame cho Facilitator)
+
+Hiển thị trực tiếp ở Banner màu vàng phía trên cùng giao diện (`#annotation-box`):
+
+```text
+OPTION A (User-Led Explainer):
+- We expect the tester to: Tự nhận biết lỗi, bôi đen dòng 4 và chủ động bấm "Hỏi AI giải thích dòng 4". Tester tự tay sửa code.
+- Watch for: Tester có biết cách chọn dòng code lỗi không, hay lúng túng tìm nút sửa tự động.
+- Do not explain: Không hướng dẫn cách bôi đen hay cách sửa code Python.
+
+OPTION B (Co-Creation Socratic):
+- We expect the tester to: Bấm "Run Test Cases", gặp lỗi Failed và trả lời 2 câu trắc nghiệm chẩn đoán để tự suy luận.
+- Watch for: Tester có đọc kỹ câu hỏi trắc nghiệm không hay bấm nút Skip Quiz ngay.
+- Do not explain: Không chọn hộ đáp án A/B cho tester.
+
+OPTION C (AI-Led Proactive Patch):
+- We expect the tester to: Bấm "Giả lập kẹt 45s", đọc bảng Diff code màu xanh/đỏ và bấm Apply Patch.
+- Watch for: Tester có đọc bản Diff không hay bấm nhắm mắt Apply, và có dùng nút Undo khi đổi ý không.
+- Do not explain: Không gợi ý bấm Apply Patch hay giải thích cơ chế ngầm.
+```
+
+---
+
+### 5. Gate 4 Self-Check — Test-Ready
+- [x] Người không build có thể tự mở `index.html`, thực hiện cùng 1 task qua A/B/C và reset về ban đầu mà không cần giải thích.
 
 ---
 
